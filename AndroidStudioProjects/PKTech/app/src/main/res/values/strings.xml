@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">PK Tech</string>
+    <string name="onBoarding_image">onBoarding_image</string>
+    <string name="waec_e_study_app">Waec E-Study App</string>
+    <string name="sign_up_or_login">Sign Up or Login</string>
+    <string name="select_desire">select desire sign up method</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="continue_facebook">Continue with Facebook</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="already_have">Already have account? login</string>
+    <string name="icon">icons</string>
+    <string name="login_your_account">Login Your Account</string>
+    <string name="passsword">Password</string>
+    <string name="confirm_passsword">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="dont_have_an_account">Don\'t have an account? Sign Up</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="sign_up_agreement">By registering or skipping this step you agreed to Terms of Service</string>
+
+</resources>
