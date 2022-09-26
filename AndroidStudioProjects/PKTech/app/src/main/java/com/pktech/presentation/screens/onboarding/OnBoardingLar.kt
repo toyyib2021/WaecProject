@@ -24,7 +24,6 @@ import com.pktech.ui.theme.PKTechTheme
 import com.pktech.ui.theme.Shapes
 import com.pktech.ui.theme.StrongBlue2
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoarding(){
 

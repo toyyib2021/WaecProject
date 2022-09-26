@@ -2,6 +2,9 @@
     <string name="app_name">PK Tech</string>
     <string name="onBoarding_image">onBoarding_image</string>
     <string name="waec_e_study_app">Waec E-Study App</string>
+    <string name="e_study_app">E-Study App</string>
+    <string name="w_a_e_c">WAEC</string>
+    <string name="how_do_you">How do you want to study?</string>
     <string name="sign_up_or_login">Sign Up or Login</string>
     <string name="select_desire">select desire sign up method</string>
     <string name="phone_number">Phone Number</string>
@@ -15,9 +18,20 @@
     <string name="confirm_passsword">Confirm Password</string>
     <string name="email">Email</string>
     <string name="sign_in">Sign in</string>
+    <string name="save_question">Save questions and others</string>
     <string name="sign_up">Sign Up</string>
+    <string name="Home">Home</string>
+    <string name="Timeline">Timeline</string>
+    <string name="settings">Settings</string>
+    <string name="subject">Subjects</string>
+    <string name="objective">Objective</string>
+    <string name="theory">Theory</string>
     <string name="dont_have_an_account">Don\'t have an account? Sign Up</string>
     <string name="create_an_account">Create an account</string>
     <string name="sign_up_agreement">By registering or skipping this step you agreed to Terms of Service</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="mathe2010">Mathematics 2010</string>
+    <string name="update_db">Update DB</string>
 
 </resources>

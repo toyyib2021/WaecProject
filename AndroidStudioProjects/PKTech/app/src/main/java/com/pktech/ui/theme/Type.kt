@@ -33,6 +33,11 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 15.sp),
 
+    subtitle2 = TextStyle(
+        fontFamily = calibri,
+        fontWeight = FontWeight.Normal,
+        fontSize = 9.sp),
+
     subtitle1 = TextStyle(
         fontFamily = calibri,
         fontWeight = FontWeight.Normal,
