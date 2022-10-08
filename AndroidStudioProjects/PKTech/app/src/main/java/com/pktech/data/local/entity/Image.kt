@@ -7,6 +7,7 @@ import com.pktech.utill.Constants.QUESTIONS_IMAGE_DATABASE_TABLE
 
 @Entity(tableName = QUESTIONS_IMAGE_DATABASE_TABLE)
 data class ImageDB(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val bitmap: Bitmap)
+    @PrimaryKey(autoGenerate = false)
+    val id: String,
+    var bitmap: Bitmap? = null
+    )

@@ -26,6 +26,7 @@ import com.pktech.R
 import com.pktech.domain.model.UiDataClass
 import com.pktech.ui.theme.StrongBlue
 import com.pktech.ui.theme.StrongBlue2
+import com.pktech.utill.BackHandlerFun
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -35,7 +36,9 @@ fun Home( onStudyYearClick: () -> Unit,
           onTestTopicClick: () -> Unit,
          onSaveQuestionClick: () -> Unit,
          onLiteratureClick: () -> Unit,
+
 ){
+
 
     val dashboardVM : DashboardVM = viewModel()
     val dataState = dashboardVM.uiState.value.saveQuestionAndOthers
@@ -56,7 +59,10 @@ fun Home( onStudyYearClick: () -> Unit,
             Spacer(modifier = Modifier.padding(10.dp))
             HomeTextSectionOne(stringResource(id = R.string.save_question))
             Spacer(modifier = Modifier.padding(10.dp))
-            SaveQuestionAndOthers(uiDataClass = dataState[0], onClick = onSaveQuestionClick)
+            SaveQuestionAndOthers(
+                uiDataClass = dataState[0],
+                onClick = onSaveQuestionClick
+            )
             Spacer(modifier = Modifier.padding(10.dp))
             SaveQuestionAndOthers(uiDataClass = dataState[1], onClick = onLiteratureClick)
             Spacer(modifier = Modifier.padding(10.dp))

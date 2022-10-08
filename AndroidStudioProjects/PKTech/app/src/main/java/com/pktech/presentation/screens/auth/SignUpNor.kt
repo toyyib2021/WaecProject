@@ -33,6 +33,12 @@ fun SignUpNor(
 
     val scope =  rememberCoroutineScope()
 
+    LaunchedEffect(key1 = true){
+        if(authVM.isLoading == 2) {
+            onSignUpClick()
+        }
+    }
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -250,16 +256,26 @@ fun SignUpNor(
             ),
             shape = RoundedCornerShape(9.dp),
             onClick = {
-                onSignUpClick()
-                authVM.addAllSubjects(context = context)
+                authVM.addAllSubjectsAndImage(context = context)
 
 
             }) {
-            Text(
-                text = stringResource(R.string.sign_up),
-                color = Color.White,
-                style = MaterialTheme.typography.body2
-            )
+
+            if(authVM.isLoading == 2) {
+                Text(
+                    text = stringResource(R.string.loading),
+                    color = Color.White,
+                    style = MaterialTheme.typography.body2
+                )
+            }else{
+                Text(
+                    text = stringResource(R.string.sign_up),
+                    color = Color.White,
+                    style = MaterialTheme.typography.body2
+                )
+
+            }
+
         }
 
         Text(

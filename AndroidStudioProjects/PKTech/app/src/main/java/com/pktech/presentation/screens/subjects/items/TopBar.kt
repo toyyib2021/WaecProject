@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PowerSettingsNew
@@ -17,14 +16,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pktech.R
-import com.pktech.presentation.screens.subjects.maths.uiItems.TopAppBarTextAndTime
 
 @Composable
 fun StudyTopBar(
     onEndQuizClick: () -> Unit,
     seconds: String,
     minutes: String,
-    hours: String
+    hours: String,
+    studyOrTestState: String,
+    questionTitle: String
 
 
 ) {
@@ -39,11 +39,16 @@ fun StudyTopBar(
 
                 ) {
 
-                TopAppBarTextAndTime(
-                    seconds = seconds,
-                    minutes = minutes,
-                    hours = hours
-                )
+
+                    TopAppBarTextAndTime(
+                        seconds = seconds,
+                        minutes = minutes,
+                        hours = hours,
+                        studyOrTestState = studyOrTestState,
+                        questionTitle = questionTitle
+                    )
+
+
 //                Text(text = stringResource(R.string.mathe2010))
 
             }

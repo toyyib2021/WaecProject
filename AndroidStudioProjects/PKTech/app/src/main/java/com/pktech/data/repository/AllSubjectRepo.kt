@@ -1,25 +1,15 @@
 package com.pktech.data.repository
 
 import com.pktech.data.local.entity.Subjects
-import com.pktech.data.repository.english.EnglishRepo
-import com.pktech.data.repository.maths.MathsRepoDB
+import com.pktech.data.repository.english.EnglishAllYear
+import com.pktech.data.repository.maths.Maths2012Repo
+import com.pktech.data.repository.maths.MathsAllYear
 
 class AllSubjectRepo {
 
-    private val englishRepo = EnglishRepo()
-    private val mathsRepoDB = MathsRepoDB()
+    private val englishAllYear = EnglishAllYear()
+    private val mathsAllYear = MathsAllYear()
 
-    val allSubjectRepo = listOf<Subjects>(
-        Subjects(
-            subject = englishRepo.englishYear,
-            id = 1
-        ),
-        Subjects(
-            subject = mathsRepoDB.mathYear,
-            id = 2
-        ),
-        
 
-    )
 
 }

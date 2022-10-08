@@ -11,24 +11,24 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface QuestionsDAO {
 
-    @Query("SELECT *FROM questions_table ORDER BY id ASC")
-    fun getAllSubjects(): LiveData<List<Subjects>>
 
-    @Query("DELETE FROM questions_table")
-    suspend fun deleteAll()
+
+    @Query("SELECT options FROM selected_option_table")
+    fun getOptionsCol(): LiveData<List<String>>
+
 
     @Query("DELETE FROM selected_option_table")
     suspend fun deleteAllSelectedOption()
 
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addAllSubjects(allSubject: List<Subjects>)
-
     @Query("SELECT *FROM questions_image_table ORDER BY id ASC")
     fun getAllImage(): LiveData<List<ImageDB>>
 
+    @Query("DELETE FROM questions_image_table")
+    suspend fun deleteAllImage()
+
     @Query("SELECT *FROM questions_image_table WHERE id =:imageDB")
-    fun getSingleImage(imageDB: Int): LiveData<ImageDB>
+    fun getSingleImage(imageDB: String): LiveData<ImageDB>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAllImage(allImage: List<ImageDB>)

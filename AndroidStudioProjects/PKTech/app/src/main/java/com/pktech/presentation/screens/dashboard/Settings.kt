@@ -9,12 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pktech.R
 import com.pktech.ui.theme.StrongBlue2
 import com.pktech.ui.theme.VeryDarkGray
+import com.pktech.utill.BackHandlerFun
+import com.pktech.utill.UiEvent
 
 @Composable
 fun Settings(){
@@ -24,6 +27,10 @@ fun Settings(){
 
         val dashboardVM: DashboardVM = hiltViewModel()
         val isLoading = dashboardVM.questionState.value.isLoading
+        val context = LocalContext.current
+        val scaffoldState = rememberScaffoldState()
+
+        BackHandlerFun(backHandler = { dashboardVM.selectedTab  = 0 })
 
 
         Button(
@@ -36,11 +43,10 @@ fun Settings(){
             ),
             shape = RoundedCornerShape(9.dp),
             onClick = {
-                dashboardVM.deleteAllSubjectsTest()
-
+                dashboardVM.addAllSubjectsAndImage(context = context)
             }) {
             Text(
-                text = stringResource(R.string.update_db),
+                text = "Get All Questions",
                 color = Color.White,
                 style = MaterialTheme.typography.body2
             )

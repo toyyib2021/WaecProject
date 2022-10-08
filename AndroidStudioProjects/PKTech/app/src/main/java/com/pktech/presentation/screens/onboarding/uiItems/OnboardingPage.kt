@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pktech.R
 import com.pktech.domain.model.OnBoardingData
-import com.pktech.presentation.screens.subjects.maths.topics.Greeting
 import com.pktech.ui.theme.DarkBlue
 import com.pktech.ui.theme.PKTechTheme
 import com.pktech.ui.theme.StrongBlue2

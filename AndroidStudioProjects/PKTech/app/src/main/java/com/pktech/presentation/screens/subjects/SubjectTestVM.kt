@@ -6,9 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pktech.data.local.entity.ImageDB
+import com.pktech.data.local.entity.Maths
 import com.pktech.data.local.entity.SelectedOptionDB
 import com.pktech.data.local.entity.Subjects
 import com.pktech.data.repository.UiRepository
+import com.pktech.data.repository.maths.Maths2012Repo
+import com.pktech.domain.repository.MathRepository
 import com.pktech.domain.repository.QuestionsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +23,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SubjectTestVM @Inject constructor(
-   val repository: QuestionsRepository
+   val repository: MathRepository
 ):ViewModel() {
+
+
+
+
+   var getMaths2012: LiveData<Maths> = repository.getAYear(year = "2012")
+
 
 
 }

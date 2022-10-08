@@ -1,5 +1,6 @@
 package com.pktech.presentation.screens.dashboard
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 
 import androidx.compose.material.*
@@ -28,6 +29,7 @@ import com.pktech.R
 import com.pktech.data.local.StudyOrTestKey
 import com.pktech.ui.theme.DarkBlue
 import com.pktech.ui.theme.Purple700
+import com.pktech.utill.BackHandlerFun
 import kotlinx.coroutines.launch
 
 
@@ -39,7 +41,13 @@ fun Dashboard(
     navControllerTestYear: () -> Unit,
     navControllerStudyTopic: () -> Unit,
     navControllerTestTopic: () -> Unit,
+   backHandler: () -> Unit,
 ) {
+
+    BackHandlerFun(backHandler = {
+      backHandler()
+
+    } )
 
     val bottomNavPosition = listOf<Int>(0, 1, 2)
 

@@ -1,6 +1,7 @@
 package com.pktech
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 
@@ -11,11 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.theme.MaterialComponentsViewInflater
 import com.pktech.navigation.navHos.SetupNavGraph
-
-import com.pktech.presentation.screens.subjects.maths.topics.Greeting
 import com.pktech.ui.theme.PKTechTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,9 +37,6 @@ class MainActivity : ComponentActivity() {
         }
 
 
-
-
-
     }
 }
 
@@ -52,7 +46,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     PKTechTheme {
-        Greeting("Android")
+
     }
 
 }

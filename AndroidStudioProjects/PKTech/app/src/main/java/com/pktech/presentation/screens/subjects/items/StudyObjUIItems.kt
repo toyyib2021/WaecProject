@@ -33,7 +33,6 @@ import com.pktech.ui.theme.*
 @Composable
 fun StudyObjUIItems(
     instructions: String,
-    onShareIconClick: () -> Unit,
     onSaveIconClick: () -> Unit,
     currentAnswer:@Composable () -> Unit,
     questionIndex: String,
@@ -46,7 +45,7 @@ fun StudyObjUIItems(
     optionC:@Composable () -> Unit,
     optionD:@Composable () -> Unit,
     questionSize: String,
-    bookmarkState: Boolean,
+    bookmarkState: Int,
     studyOrTestState: String,
     onShowAnswerClick: () -> Unit,
     onShowAnswerIconClick: () -> Unit,
@@ -63,22 +62,21 @@ fun StudyObjUIItems(
             modifier = Modifier
                 .weight(9f)
                 .fillMaxWidth(),
-            instructions,
-            onSaveIconClick,
-            onShareIconClick,
-            currentAnswer,
-            questionIndex,
-            currentQuestion,
-            optionA,
-            optionB,
-            optionC,
-            optionD,
-            questionSize,
-            bookmarkState,
-            studyOrTestState,
-            onShowAnswerClick,
-            onShowAnswerIconClick,
-            expandedState
+            instructions = instructions,
+            currentAnswer = currentAnswer,
+            questionIndex = questionIndex,
+            currentQuestion = currentQuestion,
+            optionA = optionA,
+            optionB = optionB,
+            optionC = optionC,
+            optionD = optionD,
+            questionSize = questionSize,
+            bookmarkState = bookmarkState,
+            studyOrTestState = studyOrTestState,
+            onShowAnswerClick = onShowAnswerClick,
+            onShowAnswerIconClick = onShowAnswerIconClick,
+            expandedState = expandedState,
+            onSaveIconClick = onSaveIconClick
 
         )
 
@@ -114,8 +112,6 @@ fun StudyObjUIItems(
 fun SectionOne(
     modifier: Modifier,
     instructions: String,
-    onShareIconClick: () -> Unit,
-    onSaveIconClick: () -> Unit,
     currentAnswer:@Composable () -> Unit,
     questionIndex: String,
     currentQuestion: @Composable () -> Unit,
@@ -124,11 +120,12 @@ fun SectionOne(
     optionC:@Composable () -> Unit,
     optionD:@Composable () -> Unit,
     questionSize: String,
-    bookmarkState: Boolean,
+    bookmarkState: Int,
     studyOrTestState: String,
     onShowAnswerClick: () -> Unit,
     onShowAnswerIconClick: () -> Unit,
     expandedState: Boolean,
+    onSaveIconClick: () -> Unit
 
 ) {
 
@@ -139,9 +136,8 @@ fun SectionOne(
                 questionIndex,
                 questionSize = questionSize,
                 bookmarkState = bookmarkState,
-                onShareIconClick,
-                onSaveIconClick,
-                currentQuestion = currentQuestion
+                currentQuestion = currentQuestion,
+                onSaveIconClick = onSaveIconClick
 
             )
             if (studyOrTestState != SELECTED_TEST_KEY){
@@ -173,8 +169,7 @@ private fun QuestionSection(
     instructions: String,
     questionIndex: String,
     questionSize: String,
-    bookmarkState: Boolean,
-    onShareIconClick: () -> Unit,
+    bookmarkState: Int,
     onSaveIconClick: () -> Unit,
     currentQuestion: @Composable () -> Unit
 
@@ -189,19 +184,41 @@ private fun QuestionSection(
             shape = RoundedCornerShape(10.dp)
         ) {
 
-            Column(modifier = Modifier
-                .background(White)
-                .padding(10.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(White),
+                verticalAlignment = Alignment.CenterVertically,
 
-            ){
-                Text(
-                    text = " Question $questionIndex /  $questionSize ",
-                    color = VeryDarkGray,
-                    style = MaterialTheme.typography.body2,
+            ) {
+                Column(
+                    modifier = Modifier.weight(8f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
+                    Text(
+                        text = " Question $questionIndex /  $questionSize ",
+                        color = VeryDarkGray,
+                        style = MaterialTheme.typography.body2,
                     )
+                }
+
+
+                IconButton(
+                    modifier = Modifier
+                        .weight(2f),
+                    onClick = { onSaveIconClick() }) {
+                    Icon(
+                        Icons.Outlined.Bookmark,
+                        contentDescription = stringResource(id = R.string.icon),
+                        tint = if (bookmarkState == 1) {
+                            VeryDarkGray
+                        } else {
+                             Color.White
+                        }
+                    )
+                }
             }
         }
 
@@ -242,51 +259,12 @@ private fun QuestionSection(
 
             Column(
                 modifier = Modifier
-                    .weight(8f)
+                    .weight(9f)
             ) {
 
                 currentQuestion()
 
             }
-
-            Column(
-                modifier = Modifier
-                    .weight(1f),
-                verticalArrangement = Arrangement.SpaceEvenly
-            ) {
-
-                IconButton(
-                    onClick = { onSaveIconClick()}) {
-                    Icon(
-                        Icons.Outlined.Bookmark,
-                        contentDescription = stringResource(id = R.string.icon)
-                    )
-//                    if (bookmarkState){
-//                        Icon(
-//                            Icons.Default.Bookmark,
-//                            contentDescription = stringResource(id = R.string.icon)
-//                        )
-//                    }else{
-//                        Icon(
-//                            Icons.Outlined.Bookmark,
-//                            contentDescription = stringResource(id = R.string.icon)
-//                        )
-//                    }
-
-
-                }
-                IconButton(
-                    onClick = {onShareIconClick() }) {
-                    Icon(
-                        Icons.Default.Share,
-                        contentDescription = stringResource(id = R.string.icon)
-                    )
-
-                }
-
-
-            }
-
         }
 
 

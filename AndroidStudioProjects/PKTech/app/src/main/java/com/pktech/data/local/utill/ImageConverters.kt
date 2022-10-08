@@ -10,19 +10,19 @@ import com.pktech.domain.model.Questions
 import java.io.ByteArrayOutputStream
 
 
-@ProvidedTypeConverter
-class ImageConverters() {
-
-    @TypeConverter
-    fun fromBitmap(bitmap: Bitmap): ByteArray {
-        val outputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-        return outputStream.toByteArray()
-    }
-
-    @TypeConverter
-    fun toBitmap(byteArray: ByteArray): Bitmap{
-        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-
-    }
-}
+//@ProvidedTypeConverter
+//class ImageConverters() {
+//
+//    @TypeConverter
+//    fun fromBitmap(bitmap: Bitmap): ByteArray {
+//        val outputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+//        return outputStream.toByteArray()
+//    }
+//
+//    @TypeConverter
+//    fun toBitmap(byteArray: ByteArray): Bitmap{
+//        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+//
+//    }
+//}

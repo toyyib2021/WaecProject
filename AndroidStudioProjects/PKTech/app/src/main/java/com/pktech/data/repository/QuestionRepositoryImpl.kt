@@ -5,6 +5,7 @@ import com.pktech.data.local.QuestionsDAO
 import com.pktech.data.local.entity.Subjects
 import com.pktech.data.local.entity.ImageDB
 import com.pktech.data.local.entity.SelectedOptionDB
+import com.pktech.domain.model.Questions
 import com.pktech.domain.repository.QuestionsRepository
 import com.pktech.utill.RequestState
 import kotlinx.coroutines.delay
@@ -15,14 +16,14 @@ class QuestionRepositoryImpl(
     private val dao: QuestionsDAO
 ): QuestionsRepository {
 
-    override  fun getAllSubjects(): LiveData<List<Subjects>> {
-        return dao.getAllSubjects()
-    }
 
-    override suspend fun addAllSubjects(allSubject: List<Subjects>) {
-        return dao.addAllSubjects(allSubject = allSubject)
-    }
 
+
+
+
+    override fun getOptionsCol(): LiveData<List<String>> {
+        return dao.getOptionsCol()
+    }
 
 
     override  fun getAllImage(): LiveData<List<ImageDB>> {
@@ -33,8 +34,12 @@ class QuestionRepositoryImpl(
         dao.addAllImage(allImage = allImage)
     }
 
-    override fun getSingleImage(imageDB: Int): LiveData<ImageDB> {
+    override fun getSingleImage(imageDB: String): LiveData<ImageDB> {
         return dao.getSingleImage(imageDB = imageDB)
+    }
+
+    override suspend fun deleteAllImage() {
+        dao.deleteAllImage()
     }
 
     override suspend fun addEmptyOptions(emptyOptions: List<SelectedOptionDB>) {
@@ -53,9 +58,7 @@ class QuestionRepositoryImpl(
         return dao.getSelectedOption()
     }
 
-    override suspend fun deleteAll(){
-        dao.deleteAll()
-    }
+
 
     override suspend fun deleteAllSelectedOption() {
         dao.deleteAllSelectedOption()
