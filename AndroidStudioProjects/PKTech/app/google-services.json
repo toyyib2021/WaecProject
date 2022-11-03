@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810972474238",
+    "project_id": "pk-tech",
+    "storage_bucket": "pk-tech.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810972474238:android:e53af8894aba9082a6612f",
+        "android_client_info": {
+          "package_name": "com.pktech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810972474238-tgfhd9d7eneh4cd4cjtdp06c4t4eocn1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc6EHaChqENu4kqEvEXiJSDePuiRkTP-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810972474238-tgfhd9d7eneh4cd4cjtdp06c4t4eocn1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

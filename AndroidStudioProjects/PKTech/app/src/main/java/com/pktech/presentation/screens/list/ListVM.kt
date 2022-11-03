@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pktech.data.local.entity.SaveQuestionData
 import com.pktech.data.repository.UiRepository
 import com.pktech.data.repository.Years
 
@@ -44,5 +45,5 @@ val homeStudyAndTest = UiRepository()
 data class ListUiState(
     var subjects: List<UiDataClass> = homeStudyAndTest.subjects,
     var years: List<Years> = homeStudyAndTest.years,
-
+    var saveQuestionData: List<SaveQuestionData> = listOf()
 )

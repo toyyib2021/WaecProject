@@ -35,10 +35,9 @@ fun NavGraphBuilder.governmentObjYearNavGraph(
         composable(
             route = GovernmentObjYear.Obj2012.route
         ) {
-            Govt2012Obj()
+            Govt2012Obj(onYesClickTest = {}, onYesClickStudy = {})
 
         }
-
         composable(
             route = GovernmentObjYear.Obj2013.route
         ) {

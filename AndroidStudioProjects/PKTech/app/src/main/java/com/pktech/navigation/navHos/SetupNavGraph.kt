@@ -45,6 +45,7 @@ fun SetupNavGraph(
         governmentTheoryYearNavGraph(navController = navController)
         marketingObjYearNavGraph(navController = navController)
         marketingTheoryYearNavGraph(navController = navController)
+        overallTestResultNavGraph(navController = navController)
 
 
     }

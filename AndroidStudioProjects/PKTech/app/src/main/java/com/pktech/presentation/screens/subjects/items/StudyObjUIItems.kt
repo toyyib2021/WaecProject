@@ -14,7 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,10 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.ui.foundation.background
 import com.pktech.utill.Constants.SELECTED_TEST_KEY
 import com.pktech.R
 
 import com.pktech.ui.theme.*
+import com.pktech.utill.Constants
 
 
 @Composable
@@ -45,11 +47,13 @@ fun StudyObjUIItems(
     optionC:@Composable () -> Unit,
     optionD:@Composable () -> Unit,
     questionSize: String,
-    bookmarkState: Int,
     studyOrTestState: String,
     onShowAnswerClick: () -> Unit,
     onShowAnswerIconClick: () -> Unit,
     expandedState: Boolean,
+    openInstruction: () -> Unit,
+    snackbarHostStateForTime: SnackbarHostState,
+    snackbarHostStateForSaveQuestion: SnackbarHostState
 
 ) {
 
@@ -57,6 +61,34 @@ fun StudyObjUIItems(
         .fillMaxSize()
         .padding(20.dp)
     ) {
+
+        SnackbarHost(
+            hostState = snackbarHostStateForTime,
+            snackbar = { snackbarData: SnackbarData ->
+                Card(
+                    shape = RoundedCornerShape(8.dp),
+                    border = BorderStroke(5.dp, Color.Red),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(8.dp).background(Color.Red),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Icon(imageVector = Icons.Default.Notifications,
+                            contentDescription = "",
+                            tint = Color.White
+                        )
+                        Text(text = snackbarData.message,
+                            style = MaterialTheme.typography.body2,
+                            color = Color.White
+                        )
+
+                    }
+                }
+            }
+        )
 
         SectionOne(
             modifier = Modifier
@@ -71,13 +103,12 @@ fun StudyObjUIItems(
             optionC = optionC,
             optionD = optionD,
             questionSize = questionSize,
-            bookmarkState = bookmarkState,
             studyOrTestState = studyOrTestState,
             onShowAnswerClick = onShowAnswerClick,
             onShowAnswerIconClick = onShowAnswerIconClick,
             expandedState = expandedState,
-            onSaveIconClick = onSaveIconClick
-
+            onSaveIconClick = onSaveIconClick,
+            openInstruction = openInstruction
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
@@ -92,6 +123,30 @@ fun StudyObjUIItems(
                 text = "Goto Question No.")
         }
 
+        SnackbarHost(
+            hostState = snackbarHostStateForSaveQuestion,
+            snackbar = { snackbarData: SnackbarData ->
+                Card(
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    backgroundColor = DarkBlue
+                ) {
+                    Row(
+                        modifier = Modifier.padding(10.dp).background(DarkBlue).fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+
+                        Text(text = snackbarData.message,
+                            style = MaterialTheme.typography.body2,
+                            color = White
+                        )
+
+                    }
+                }
+            }
+        )
         Spacer(modifier = Modifier.padding(10.dp))
 
         BottomSection(
@@ -101,6 +156,7 @@ fun StudyObjUIItems(
             onNextBtClick = onNextBtClick,
             onPreviousBtClick = onPreviousBtClick
         )
+
 
 
     }
@@ -120,12 +176,12 @@ fun SectionOne(
     optionC:@Composable () -> Unit,
     optionD:@Composable () -> Unit,
     questionSize: String,
-    bookmarkState: Int,
     studyOrTestState: String,
     onShowAnswerClick: () -> Unit,
     onShowAnswerIconClick: () -> Unit,
     expandedState: Boolean,
-    onSaveIconClick: () -> Unit
+    onSaveIconClick: () -> Unit,
+    openInstruction: () -> Unit
 
 ) {
 
@@ -135,21 +191,33 @@ fun SectionOne(
                 instructions = instructions,
                 questionIndex,
                 questionSize = questionSize,
-                bookmarkState = bookmarkState,
                 currentQuestion = currentQuestion,
-                onSaveIconClick = onSaveIconClick
+                onSaveIconClick = onSaveIconClick,
+                openInstruction = openInstruction
 
             )
-            if (studyOrTestState != SELECTED_TEST_KEY){
-                AnswerSection(
-                    currentAnswer = currentAnswer,
-                    onShowAnswerClick = onShowAnswerClick,
-                    onShowAnswerIconClick = onShowAnswerIconClick,
-                    expandedState = expandedState
+            when(studyOrTestState){
+                Constants.SELECTED_STUDY_KEY -> {
+                    AnswerSection(
+                        currentAnswer = currentAnswer,
+                        onShowAnswerClick = onShowAnswerClick,
+                        onShowAnswerIconClick = onShowAnswerIconClick,
+                        expandedState = expandedState
 
-                )
+                    )
+                }
+
             }
-
+//            if (studyOrTestState != SELECTED_TEST_KEY){
+//                AnswerSection(
+//                    currentAnswer = currentAnswer,
+//                    onShowAnswerClick = onShowAnswerClick,
+//                    onShowAnswerIconClick = onShowAnswerIconClick,
+//                    expandedState = expandedState
+//
+//                )
+//            }
+            Spacer(modifier = Modifier.padding(5.dp))
             OptionSection(
                 optionA,
                 optionB,
@@ -157,6 +225,7 @@ fun SectionOne(
                 optionD
 
             )
+
 
         }
     }
@@ -169,9 +238,9 @@ private fun QuestionSection(
     instructions: String,
     questionIndex: String,
     questionSize: String,
-    bookmarkState: Int,
     onSaveIconClick: () -> Unit,
-    currentQuestion: @Composable () -> Unit
+    currentQuestion: @Composable () -> Unit,
+    openInstruction: () -> Unit
 
 ) {
     Column(
@@ -212,11 +281,7 @@ private fun QuestionSection(
                     Icon(
                         Icons.Outlined.Bookmark,
                         contentDescription = stringResource(id = R.string.icon),
-                        tint = if (bookmarkState == 1) {
-                            VeryDarkGray
-                        } else {
-                             Color.White
-                        }
+                        tint = Color.Black
                     )
                 }
             }
@@ -230,17 +295,18 @@ private fun QuestionSection(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp),
+                    .padding(5.dp)
+                    .clickable { openInstruction() },
                 text = instructions,
                 color = VeryDarkGray,
                 style = MaterialTheme.typography.body2,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = 1
+                maxLines = 2
 
 
             )
         }
-
+        Spacer(modifier = Modifier.padding(5.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -273,7 +339,7 @@ private fun QuestionSection(
 
 
 @Composable
-fun AnswerSection(
+private fun AnswerSection(
     currentAnswer:@Composable () -> Unit,
     expandedState: Boolean,
     onShowAnswerClick: () -> Unit,

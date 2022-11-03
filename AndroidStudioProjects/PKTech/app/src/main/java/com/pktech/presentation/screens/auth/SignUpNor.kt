@@ -1,6 +1,7 @@
 package com.pktech.presentation.screens.auth
 
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,8 +21,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.pktech.R
+import com.pktech.presentation.screens.dashboard.isInternetAvailable
 import com.pktech.ui.theme.*
+import com.pktech.utill.Constants.COMPLETE
+import com.pktech.utill.Constants.LOADING
 
 @Composable
 fun SignUpNor(
@@ -30,11 +35,13 @@ fun SignUpNor(
 ) {
     val context = LocalContext.current
     val authVM : AuthVM = hiltViewModel()
+    var firebaseAuth = FirebaseAuth.getInstance()
 
     val scope =  rememberCoroutineScope()
 
-    LaunchedEffect(key1 = true){
-        if(authVM.isLoading == 2) {
+    var loginCheck by remember { mutableStateOf("")}
+    LaunchedEffect(key1 = authVM.isLoading, key2 = loginCheck){
+        if(authVM.isLoading == COMPLETE && loginCheck == COMPLETE ) {
             onSignUpClick()
         }
     }
@@ -256,24 +263,54 @@ fun SignUpNor(
             ),
             shape = RoundedCornerShape(9.dp),
             onClick = {
-                authVM.addAllSubjectsAndImage(context = context)
+                if (isInternetAvailable(context)){
+                    if(email != "" && email != "" && phone != "" && password != "" && confirmPassword != ""){
+                        if(password == confirmPassword){
+                            authVM.isLoading = LOADING
+                            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
+                                if (it.isSuccessful()){
+                                    authVM.addAllSubjectsAndImage(context = context)
+                                    Toast.makeText(context, "Successfully Register", Toast.LENGTH_SHORT).show()
+                                    loginCheck = COMPLETE
+                                }else{
+                                    Toast.makeText(context, "Try Again Something went wrong", Toast.LENGTH_SHORT).show()
+                                    authVM.isLoading = ""
+                                }
+                            }
+                        } else{
+                            Toast.makeText(context, "password not match", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(context, "empty fields", Toast.LENGTH_SHORT).show()
+                    }
 
+                }
 
-            }) {
+            }
+        ) {
+            when (authVM.isLoading) {
+                LOADING -> {
+                    Text(
+                        text = stringResource(R.string.loading),
+                        color = Color.White,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+                COMPLETE -> {
+                    Text(
+                        text = "Successful",
+                        color = Color.White,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+                else -> {
+                    Text(
+                        text = stringResource(R.string.sign_up),
+                        color = Color.White,
+                        style = MaterialTheme.typography.body2
+                    )
 
-            if(authVM.isLoading == 2) {
-                Text(
-                    text = stringResource(R.string.loading),
-                    color = Color.White,
-                    style = MaterialTheme.typography.body2
-                )
-            }else{
-                Text(
-                    text = stringResource(R.string.sign_up),
-                    color = Color.White,
-                    style = MaterialTheme.typography.body2
-                )
-
+                }
             }
 
         }

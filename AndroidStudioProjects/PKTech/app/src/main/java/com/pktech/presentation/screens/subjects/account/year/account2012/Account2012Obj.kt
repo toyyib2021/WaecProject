@@ -1,8 +1,6 @@
 package com.pktech.presentation.screens.subjects.account.year.account2012
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pktech.data.local.StudyOrTestKey
-import com.pktech.data.local.entity.Maths
+import com.pktech.data.local.entity.Account
 import com.pktech.data.local.entity.SelectedOptionDB
 import com.pktech.data.repository.UiRepository
 import com.pktech.presentation.screens.subjects.QuestionIndexSheet
@@ -23,7 +21,6 @@ import com.pktech.presentation.screens.subjects.SubjectVM
 import com.pktech.presentation.screens.subjects.account.year.account2012.items.AccountQuestion
 import com.pktech.presentation.screens.subjects.items.*
 import com.pktech.presentation.screens.subjects.items.CurrentAnswer
-import com.pktech.presentation.screens.subjects.maths.year.math2012.items.*
 import com.pktech.presentation.screens.subjects.questionIndexSheetRepo
 import com.pktech.ui.theme.White
 import com.pktech.utill.BackHandlerFun
@@ -52,7 +49,7 @@ fun Account2012Obj(
 
     val studyOrTestKeyValue = studyOrTestKey.getKey.collectAsState(initial = "")
 
-    val account2012 by account2012VM.getAccount2012.observeAsState(listOf<Maths>())
+    val account2012 by account2012VM.getAccount2012.observeAsState(listOf<Account>())
     val account2012R = account2012VM.getAccount2012.value
     account2012::class.java
 
@@ -78,7 +75,6 @@ fun Account2012Obj(
     val alphabetOptionD = uiRepository.alphabetOptions[currentIndex].options[3]
 
 
-    var emptyCorrectOption = subjectVM.emptyCorrectOption.value.get(currentIndex).selectedOption
 
     val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
     val getSelectedOptionR = subjectVM.getSelectedOption.value
@@ -99,8 +95,33 @@ fun Account2012Obj(
 
 
     var expandedState by remember { mutableStateOf(false)}
-    var bookmarkState by remember { mutableStateOf(0) }
     var openDialog by remember { mutableStateOf(false)}
+    var openInstruction by remember { mutableStateOf(false) }
+    var correctOptionColor by remember { mutableStateOf("") }
+
+    val snackbarHostStateForSaveQuestion = remember { SnackbarHostState() }
+
+
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(key1 = subjectVM.minutes, key2 = subjectVM.seconds){
+        if (subjectVM.minutes == "05" && subjectVM.seconds == "00" ){
+            scope.launch {
+                snackbarHostState.showSnackbar("You have five minutes left")
+            }
+        }else if (subjectVM.minutes == "01" && subjectVM.seconds == "00" ){
+            scope.launch {
+                snackbarHostState.showSnackbar("You have one minutes left")
+            }
+        }else if (subjectVM.minutes == "00" && subjectVM.seconds == "00" ){
+            scope.launch {
+                snackbarHostState.showSnackbar("TIME UP")
+            }
+        }else if (subjectVM.minutes == "00" && subjectVM.seconds == "-5" ){
+            onYesClickTest()
+        }
+
+    }
 
     LaunchedEffect(key1 = true){
         subjectVM.start()
@@ -177,24 +198,37 @@ fun Account2012Obj(
                     minutes = subjectVM.minutes,
                     seconds = subjectVM.seconds,
                     studyOrTestState = studyOrTestKeyValue.value,
-                    questionTitle = ACCOUNTING2012
+                    questionTitle = ACCOUNTING2012,
+                    secondsStudy = subjectVM.secondsStudy,
+                    minutesStudy = subjectVM.minutesStudy,
+                    hoursStudy = subjectVM.hoursStudy
                 )
             }
         ) {
 
             if (currentInstructions != null && questionIndex != null) {
+                DisplayInstructionDialog(
+                    openInstruction = openInstruction,
+                    closeInstruction = { openInstruction = false },
+                    instruction = currentInstructions
+                )
+
                 StudyObjUIItems(
                     instructions = currentInstructions,
+                    openInstruction = { openInstruction = true },
                     questionSize = account2012R.account.size.toString(),
                     studyOrTestState = studyOrTestKeyValue.value,
                     onSaveIconClick = {
-                        bookmarkState = 1
+                        subjectVM.addSaveQuestion()
+                        scope.launch {
+                            snackbarHostStateForSaveQuestion.showSnackbar("Successfully Added To Save Question List")
+                        }
+
                     },
-                    bookmarkState = bookmarkState,
                     onShowAnswerIconClick = {
                         if (!expandedState) {
                             if (correctOption != null){
-                                emptyCorrectOption = correctOption
+                                correctOptionColor = correctOption
                             }
 
                         }
@@ -203,7 +237,7 @@ fun Account2012Obj(
                     onShowAnswerClick = {
                         if (!expandedState) {
                             if (correctOption != null){
-                                emptyCorrectOption = correctOption
+                                correctOptionColor = correctOption
                             }
 
                         }
@@ -244,8 +278,10 @@ fun Account2012Obj(
                         }else if(expandedState){
                             expandedState = false
                             currentIndex--
+                            correctOptionColor = ""
                         }else{
                             currentIndex--
+                            correctOptionColor = ""
                         }
                     },
                     onNextBtClick = {
@@ -254,8 +290,10 @@ fun Account2012Obj(
                         }else if(expandedState){
                             expandedState = false
                             currentIndex++
+                            correctOptionColor = ""
                         }else {
                             currentIndex++
+                            correctOptionColor = ""
                         }
                     },
                     optionA = {
@@ -278,7 +316,7 @@ fun Account2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
 
                             }
@@ -303,7 +341,7 @@ fun Account2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
                             }
                         }
@@ -328,7 +366,7 @@ fun Account2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
                             }
                         }
@@ -353,12 +391,14 @@ fun Account2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
                             }
                         }
 
                     },
+                    snackbarHostStateForTime = snackbarHostState,
+                    snackbarHostStateForSaveQuestion = snackbarHostStateForSaveQuestion
                 )
             }
 

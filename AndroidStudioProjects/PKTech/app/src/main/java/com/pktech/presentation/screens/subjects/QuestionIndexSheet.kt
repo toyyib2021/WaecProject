@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pktech.domain.model.QuestionIndexSheetDataClass
+import com.pktech.domain.model.QuestionIndexTheorySheetDataClass
 import com.pktech.ui.theme.VeryDarkGray
 import com.pktech.ui.theme.White
 import java.security.cert.CertPath
@@ -80,3 +81,60 @@ fun SingleQuestionIndexSheet(
     )
 }
 
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun QuestionIndexSheetTheory(
+    onQuestionIndexClick: (Int) -> Unit,
+    list: List<QuestionIndexTheorySheetDataClass>,
+){
+
+    LazyVerticalGrid(
+        modifier = Modifier
+            .padding(10.dp),
+        cells = GridCells.Adaptive(minSize = 70.dp),
+    ) {
+        items(list) { index ->
+            SingleQuestionIndexSheetTheory(
+                questionIndexTheorySheetDataClass = index,
+                onQuestionIndexClick = {
+                    val id = index.id -1
+                    onQuestionIndexClick(id)
+                }
+            )
+        }
+    }
+
+}
+
+
+@Composable
+fun SingleQuestionIndexSheetTheory(
+    questionIndexTheorySheetDataClass: QuestionIndexTheorySheetDataClass,
+    onQuestionIndexClick: () -> Unit
+){
+    Card(
+        modifier = Modifier
+            .height(70.dp)
+            .width(50.dp)
+            .padding(10.dp)
+            .clickable { onQuestionIndexClick() },
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(5.dp, VeryDarkGray),
+        content = {
+            Column(
+                modifier = Modifier
+                    .background(White),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = questionIndexTheorySheetDataClass.id.toString(),
+                    color = VeryDarkGray,
+                    style = MaterialTheme.typography.body2
+                )
+            }
+
+        }
+    )
+}

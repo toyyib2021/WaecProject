@@ -2,7 +2,6 @@ package com.pktech.data.repository
 
 import androidx.lifecycle.LiveData
 import com.pktech.data.local.QuestionsDAO
-import com.pktech.data.local.entity.Subjects
 import com.pktech.data.local.entity.ImageDB
 import com.pktech.data.local.entity.SelectedOptionDB
 import com.pktech.domain.model.Questions

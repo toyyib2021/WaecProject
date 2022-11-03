@@ -25,7 +25,11 @@ import com.pktech.data.local.utill.QuestionImageConverters
     Literature::class,
     Chemistry::class,
     Government::class,
-    Marketing::class
+    Marketing::class,
+    SaveQuestionData::class,
+    TestTimelineData::class,
+    StudyTimelineData::class
+
     ],
     version = 1,
     exportSchema = false
@@ -48,5 +52,8 @@ abstract class QuestionDB: RoomDatabase() {
    abstract fun chemistryDAO(): ChemistryDAO
    abstract fun governmentDAO(): GovernmentDAO
    abstract fun marketingDAO(): MarketingDAO
+   abstract fun saveQuestionDataDAO(): SaveQuestionDataDAO
+   abstract fun studyTimelineDAO(): StudyTimelineDAO
+   abstract fun testTimelineDAO(): TestTimelineDAO
 
 }

@@ -16,6 +16,6 @@ interface EnglishRepository {
     suspend fun addEnglish(addEnglish: List<English>)
 
 
-    fun getAYear(year: String): LiveData<List<English>>
+    fun getAYear(year: String): LiveData<English>
 
 }

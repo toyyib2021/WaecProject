@@ -18,6 +18,10 @@ import com.pktech.utill.Constants.MATHS_QUESTIONS_TABLE
 import com.pktech.utill.Constants.PHYSICS_QUESTIONS_TABLE
 import kotlinx.serialization.Serializable
 
+
+
+
+
 @Entity(tableName = ENGLISH_QUESTION_TABLE)
 @Serializable
 data class English(

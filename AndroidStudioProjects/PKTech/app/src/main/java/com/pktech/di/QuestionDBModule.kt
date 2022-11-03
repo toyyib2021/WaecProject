@@ -128,6 +128,23 @@ object QuestionDBModule {
 
     @Provides
     @Singleton
+    fun provideSaveQuestionRepository( dao: QuestionDB ): SaveQuestionRepository {
+        return SaveQuestionRepositoryImpl(dao = dao.saveQuestionDataDAO())
+    }
+
+    @Provides
+    @Singleton
+    fun provideStudyTimelineRepository( dao: QuestionDB ): StudyTimelineRepository {
+        return StudyTimelineRepositoryImpl(dao = dao.studyTimelineDAO())
+    }
+
+    @Provides
+    @Singleton
+    fun provideTestTimelineRepository( dao: QuestionDB ): TestTimelineRepository {
+        return TestTimelineRepositoryImpl(dao = dao.testTimelineDAO())
+    }
+    @Provides
+    @Singleton
     fun provideQuestionsAPI(): QuestionsAPI {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())

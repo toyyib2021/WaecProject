@@ -35,7 +35,10 @@ fun NavGraphBuilder.chemistryObjYearNavGraph(
         composable(
             route = ChemistryObjYear.Obj2012.route
         ) {
-            Chy2012Obj()
+            Chy2012Obj(
+                onYesClickStudy = {},
+                onYesClickTest = {}
+            )
         }
 
         composable(

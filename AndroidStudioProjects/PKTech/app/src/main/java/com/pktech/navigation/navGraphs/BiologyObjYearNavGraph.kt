@@ -35,7 +35,10 @@ fun NavGraphBuilder.biologyObjYearNavGraph(
         composable(
             route = BiologyObjYear.Obj2012.route
         ) {
-            Bio2012Obj()
+            Bio2012Obj(
+                onYesClickTest = {},
+                onYesClickStudy = {}
+            )
 
         }
 

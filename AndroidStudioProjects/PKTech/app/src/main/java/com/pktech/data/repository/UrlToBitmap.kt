@@ -1,9 +1,12 @@
 package com.pktech.data.repository
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import coil.ImageLoader
+import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 
@@ -16,6 +19,8 @@ class UrlToBitmap {
             .data("https://weftw.herokuapp.com/image/test.png")
             .build()
         val result = (loading.execute(request) as SuccessResult).drawable
+
+
         return (result as BitmapDrawable).bitmap
     }
 
@@ -151,7 +156,7 @@ class UrlToBitmap {
         return (result as BitmapDrawable).bitmap
     }
 
-    /////////////////////////////// ::: MATHEMATICS THEORY ::: //////////////////////////////////////////////
+//    /////////////////////////////// ::: MATHEMATICS THEORY ::: //////////////////////////////////////////////
 
     suspend fun getBitmap16(context: Context): Bitmap {
         val loading = ImageLoader(context)

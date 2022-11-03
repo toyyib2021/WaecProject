@@ -32,7 +32,7 @@ fun NavGraphBuilder.economicsObjYearNavGraph(
         composable(
             route = EconomicsObjYear.Obj2012.route
         ) {
-            Eco2012Obj()
+            Eco2012Obj(onYesClickTest = {}, onYesClickStudy = {})
 
         }
 

@@ -25,6 +25,7 @@ import com.pktech.presentation.screens.subjects.SubjectVM
 import com.pktech.presentation.screens.subjects.items.StudyObjUIItems
 import com.pktech.presentation.screens.subjects.items.StudyTopBar
 import com.pktech.presentation.screens.subjects.items.DisplayAlertDialog
+import com.pktech.presentation.screens.subjects.items.DisplayInstructionDialog
 import com.pktech.presentation.screens.subjects.maths.year.math2012.items.*
 import com.pktech.presentation.screens.subjects.questionIndexSheetRepo
 import com.pktech.ui.theme.White
@@ -131,7 +132,6 @@ fun Math2012Obj(
     val alphabetOptionD = uiRepository.alphabetOptions[currentIndex].options[3]
 
 
-    var emptyCorrectOption = subjectVM.emptyCorrectOption.value.get(currentIndex).selectedOption
 
     val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
     val getSelectedOptionR = subjectVM.getSelectedOption.value
@@ -150,10 +150,32 @@ fun Math2012Obj(
 
     }
 
-
     var expandedState by remember { mutableStateOf(false)}
-    var bookmarkState by remember { mutableStateOf(0) }
     var openDialog by remember { mutableStateOf(false)}
+    var openInstruction by remember { mutableStateOf(false) }
+    var correctOptionColor by remember { mutableStateOf("") }
+
+    val snackbarHostStateForSaveQuestion = remember { SnackbarHostState() }
+
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(key1 = subjectVM.minutes, key2 = subjectVM.seconds){
+        if (subjectVM.minutes == "05" && subjectVM.seconds == "00" ){
+            scope.launch {
+                snackbarHostState.showSnackbar("You have five minutes left")
+            }
+        }else if (subjectVM.minutes == "01" && subjectVM.seconds == "00" ){
+            scope.launch {
+                snackbarHostState.showSnackbar("You have one minutes left")
+            }
+        }else if (subjectVM.minutes == "00" && subjectVM.seconds == "-10" ){
+            scope.launch {
+                snackbarHostState.showSnackbar("TIME UP")
+            }
+            onYesClickTest()
+        }
+
+    }
 
     LaunchedEffect(key1 = true){
         subjectVM.start()
@@ -230,24 +252,38 @@ fun Math2012Obj(
                     minutes = subjectVM.minutes,
                     seconds = subjectVM.seconds,
                     studyOrTestState = studyOrTestKeyValue.value,
-                    questionTitle = MATHS2012
+                    questionTitle = MATHS2012,
+                    secondsStudy = subjectVM.secondsStudy,
+                    minutesStudy = subjectVM.minutesStudy,
+                    hoursStudy = subjectVM.hoursStudy
                 )
             }
         ) {
 
             if (currentInstructions != null && questionIndex != null) {
+
+                DisplayInstructionDialog(
+                    openInstruction = openInstruction,
+                    closeInstruction = { openInstruction = false },
+                    instruction = currentInstructions
+                )
+
                 StudyObjUIItems(
                     instructions = currentInstructions,
+                    openInstruction = { openInstruction = true },
                     questionSize = maths2012R.maths.size.toString(),
                     studyOrTestState = studyOrTestKeyValue.value,
                     onSaveIconClick = {
-                        bookmarkState = 1
+                            subjectVM.addSaveQuestion()
+                            scope.launch {
+                                snackbarHostStateForSaveQuestion.showSnackbar("Successfully Added To Save Question List")
+                            }
+
                     },
-                    bookmarkState = bookmarkState,
                     onShowAnswerIconClick = {
                         if (!expandedState) {
                             if (correctOption != null){
-                                emptyCorrectOption = correctOption
+                                correctOptionColor = correctOption
                             }
 
                         }
@@ -256,7 +292,7 @@ fun Math2012Obj(
                     onShowAnswerClick = {
                         if (!expandedState) {
                             if (correctOption != null){
-                                emptyCorrectOption = correctOption
+                                correctOptionColor = correctOption
                             }
 
                         }
@@ -367,8 +403,10 @@ fun Math2012Obj(
                         }else if(expandedState){
                             expandedState = false
                             currentIndex--
+                            correctOptionColor = ""
                         }else{
                             currentIndex--
+                            correctOptionColor = ""
                         }
                     },
                     onNextBtClick = {
@@ -377,8 +415,10 @@ fun Math2012Obj(
                         }else if(expandedState){
                             expandedState = false
                             currentIndex++
+                            correctOptionColor = ""
                         }else {
                             currentIndex++
+                            correctOptionColor = ""
                         }
                     },
                     optionA = {
@@ -402,9 +442,9 @@ fun Math2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
-                                Log.i(TAG, "Math2012ObjStudy: correctOption $emptyCorrectOption")
+                                Log.i(TAG, "Math2012ObjStudy: correctOption $correctOptionColor")
 
                             }
                         }
@@ -429,7 +469,7 @@ fun Math2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
                             }
                         }
@@ -454,7 +494,7 @@ fun Math2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
                             }
                         }
@@ -479,11 +519,13 @@ fun Math2012Obj(
                                             )
                                         }
                                     },
-                                    emptyCorrectOption = emptyCorrectOption
+                                    emptyCorrectOption = correctOptionColor
                                 )
                             }
                         }
                     },
+                    snackbarHostStateForTime = snackbarHostState,
+                    snackbarHostStateForSaveQuestion = snackbarHostStateForSaveQuestion
                 )
             }
 

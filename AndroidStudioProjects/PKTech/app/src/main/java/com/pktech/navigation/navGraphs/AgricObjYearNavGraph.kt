@@ -29,7 +29,10 @@ fun NavGraphBuilder.agricultureObjYearNavGraph(
         composable(
             route = AgricultureObjYear.Obj2012.route
         ) {
-            Agric2012Obj()
+            Agric2012Obj(
+                onYesClickStudy = {},
+                onYesClickTest = {}
+            )
 
         }
 

@@ -34,7 +34,7 @@ fun NavGraphBuilder.physicsObjYearNavGraph(
         composable(
             route = PhysicsObjYear.Obj2012.route
         ) {
-            Phy2012Obj()
+            Phy2012Obj(onYesClickStudy = {}, onYesClickTest = {})
 
         }
 

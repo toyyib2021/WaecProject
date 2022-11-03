@@ -81,3 +81,48 @@ fun DisplayAlertDialog(
 
     }
 }
+
+@Composable
+fun DisplayInstructionDialog(
+    openInstruction: Boolean,
+    closeInstruction: () -> Unit,
+    instruction: String
+) {
+    if (openInstruction) {
+        AlertDialog(
+            title = {
+                Text(
+                    text = "Instruction",
+                    style = MaterialTheme.typography.body2
+                )
+            },
+            text = {
+                Text(
+                    text = instruction,
+                    style = MaterialTheme.typography.body2
+                )
+            },
+            onDismissRequest = { closeInstruction() },
+            confirmButton = {
+                Button(
+                    modifier = Modifier.width(80.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = VeryDarkGray,
+                        contentColor = White
+                    ),
+                    onClick = {
+                        closeInstruction()
+
+                    }) {
+                    Text(text = "OK")
+                }
+            },
+            dismissButton = {
+
+            }
+        )
+
+    }
+}
+
+

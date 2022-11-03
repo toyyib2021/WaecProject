@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pktech.utill.Constants.ENGLISH_THEORY_YEAR_ROUTE
 import com.pktech.navigation.screens.EnglishTheoryYear
+import com.pktech.navigation.screens.Screen
 import com.pktech.presentation.screens.subjects.eng.year.eng2012.Eng2012Theory
 import com.pktech.presentation.screens.subjects.eng.year.eng2013.Eng2013Theory
 import com.pktech.presentation.screens.subjects.eng.year.eng2014.Eng2014Theory
@@ -29,7 +30,10 @@ fun NavGraphBuilder.englishTheoryYearNavGraph(
         composable(
             route = EnglishTheoryYear.Theory2012.route
         ) {
-            Eng2012Theory()
+            Eng2012Theory(
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route)},
+                onYesClickTest = {navController.navigate(Screen.DashBoard.route)}
+            )
         }
 
         composable(

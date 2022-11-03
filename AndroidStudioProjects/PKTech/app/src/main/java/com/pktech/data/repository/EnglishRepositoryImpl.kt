@@ -17,7 +17,7 @@ class EnglishRepositoryImpl(
         dao.addEnglish(allEnglish = addEnglish)
     }
 
-    override fun getAYear(year: String): LiveData<List<English>> {
+    override fun getAYear(year: String): LiveData<English> {
         return  dao.getAYear(year = year)
     }
 

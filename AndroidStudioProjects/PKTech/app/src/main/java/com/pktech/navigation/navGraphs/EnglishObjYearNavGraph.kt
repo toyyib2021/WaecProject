@@ -1,12 +1,13 @@
 package com.pktech.navigation.navGraphs
 
+import Eng2012Obj
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pktech.utill.Constants.ENGLISH_OBJ_YEAR_ROUTE
 import com.pktech.navigation.screens.EnglishObjYear
-import com.pktech.presentation.screens.subjects.eng.year.eng2012.Eng2012Obj
+import com.pktech.navigation.screens.Screen
 import com.pktech.presentation.screens.subjects.eng.year.eng2013.Eng2013Obj
 import com.pktech.presentation.screens.subjects.eng.year.eng2014.Eng2014Obj
 import com.pktech.presentation.screens.subjects.eng.year.eng2015.Eng2015Obj
@@ -28,55 +29,101 @@ fun NavGraphBuilder.englishObjYearNavGraph(
         composable(
             route = EnglishObjYear.Obj2012.route
         ) {
-            Eng2012Obj()
+            Eng2012Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2013.route
         ) {
-            Eng2013Obj()
+            Eng2013Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2014.route
         ) {
-            Eng2014Obj()
+            Eng2014Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2015.route
         ) {
-            Eng2015Obj()
+            Eng2015Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2016.route
         ) {
-            Eng2016Obj()
+            Eng2016Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2017.route
         ) {
-            Eng2017Obj()
+            Eng2017Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2018.route
         ) {
-            Eng2018Obj()
+            Eng2018Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2019.route
         ) {
-            Eng2019Obj()
+            Eng2019Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = EnglishObjYear.Obj2020.route
         ) {
-            Eng2020Obj()
+            Eng2020Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(

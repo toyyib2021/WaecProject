@@ -39,6 +39,7 @@ sealed class Screen(val route: String){
 
 
     object MakePayment: Screen(route = "MakePayment_screen")
+
     object Paid: Screen(route = "Paid_screen")
     object Update: Screen(route = "update_screen/{selectedOptionId}/{selectedOptionId2}") {
         fun passSelectedOptionId(selectedOptionId: Int,selectedOptionId2: String ): String {
@@ -51,6 +52,22 @@ sealed class Screen(val route: String){
         }
     }
 
+}
+
+sealed class OverallTestResult(val route: String){
+    object OverallTestResultEnglish: OverallTestResult(route = "english")
+    object OverallTestResultMathematics: OverallTestResult(route = "mathematics")
+    object OverallTestResultEconomics: OverallTestResult(route = "economics")
+    object OverallTestResultCivicEducation: OverallTestResult(route = "civic education")
+    object OverallTestResultBiology: OverallTestResult(route = "biology")
+    object OverallTestResultCommerce: OverallTestResult(route = "commerce")
+    object OverallTestResultAccounting: OverallTestResult(route = "accounting")
+    object OverallTestResultPhysics: OverallTestResult(route = "physics")
+    object OverallTestResultAgriculture: OverallTestResult(route = "agriculture")
+    object OverallTestResultLiterature: OverallTestResult(route = "literature")
+    object OverallTestResultChemistry: OverallTestResult(route = "chemistry")
+    object OverallTestResultGovernment: OverallTestResult(route = "government")
+    object OverallTestResultMarketing: OverallTestResult(route = "marketing")
 }
 
 sealed class EnglishObjYear(val route: String){

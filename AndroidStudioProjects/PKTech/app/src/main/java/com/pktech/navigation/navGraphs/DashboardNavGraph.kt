@@ -10,10 +10,11 @@ import com.pktech.navigation.screens.*
 import com.pktech.presentation.screens.activation.GetActivationCode
 import com.pktech.presentation.screens.dashboard.Dashboard
 import com.pktech.presentation.screens.list.StudyAndTestYearList
-import com.pktech.presentation.screens.literatures.Literatures
+import com.pktech.presentation.screens.literatureBook.Literatures
 import com.pktech.presentation.screens.saveQuestion.SaveQuestion
-import com.pktech.presentation.screens.subjects.items.TestResult
+import com.pktech.presentation.screens.result.TestResult
 import com.pktech.ui.OnYearClick
+import com.pktech.ui.SubjectsObjClick
 
 
 fun NavGraphBuilder.dashboardNavGraph(
@@ -46,19 +47,26 @@ fun NavGraphBuilder.dashboardNavGraph(
                     }
                     backPressedTime = System.currentTimeMillis()
 
-                    }
+                    },
+                subjectsObjClick = SubjectsObjClick(
+                    onEnglishObjClick = { navController.navigate(OverallTestResult.OverallTestResultEnglish.route)},
+                    onMathematicsObjClick = {navController.navigate(OverallTestResult.OverallTestResultMathematics.route) },
+                    onEconomicsObjClick = {navController.navigate(OverallTestResult.OverallTestResultEconomics.route)},
+                    onCivicEducationObjClick = {navController.navigate(OverallTestResult.OverallTestResultCivicEducation.route)},
+                    onBiologyObjClick = {navController.navigate(OverallTestResult.OverallTestResultBiology.route)},
+                    onCommerceObjClick = {navController.navigate(OverallTestResult.OverallTestResultCommerce.route)},
+                    onAccountingObjClick = {navController.navigate(OverallTestResult.OverallTestResultAccounting.route)},
+                    onPhysicsObjClick = {navController.navigate(OverallTestResult.OverallTestResultPhysics.route)},
+                    onAgricScienceObjClick = {navController.navigate(OverallTestResult.OverallTestResultAgriculture.route)},
+                    onLitInEngObjClick = {navController.navigate(OverallTestResult.OverallTestResultLiterature.route)},
+                    onChemistryObjClick = {navController.navigate(OverallTestResult.OverallTestResultChemistry.route)},
+                    onGovernmentObjClick = {navController.navigate(OverallTestResult.OverallTestResultGovernment.route)},
+                    onMarketingObjClick = {navController.navigate(OverallTestResult.OverallTestResultMarketing.route)}
+                )
             )
         }
 
-        composable(
-            route = Screen.Result.route
-        ){
-            TestResult(
-                backHandler = { navController.navigate(Screen.DashBoard.route){
-                    navController.clearBackStack(MathObjYear.Obj2012.route)
-                }}
-            )
-        }
+
 
         composable(
             route = Screen.StudyTopic.route
@@ -790,6 +798,17 @@ fun NavGraphBuilder.dashboardNavGraph(
             GetActivationCode()
         }
 
+        composable(
+            route = Screen.Result.route
+        ){
+            TestResult(
+                backHandler = { navController.navigate(Screen.DashBoard.route)},
+                onTryAgainOrShowAnswerClick = {
+                    navController.navigate(it)
+                },
+                onHomeClick = {navController.navigate(Screen.DashBoard.route)}
+            )
+        }
 
     }
 

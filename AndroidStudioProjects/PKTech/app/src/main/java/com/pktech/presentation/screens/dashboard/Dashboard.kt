@@ -27,6 +27,7 @@ import com.pktech.utill.Constants.SELECTED_TEST_KEY
 
 import com.pktech.R
 import com.pktech.data.local.StudyOrTestKey
+import com.pktech.ui.SubjectsObjClick
 import com.pktech.ui.theme.DarkBlue
 import com.pktech.ui.theme.Purple700
 import com.pktech.utill.BackHandlerFun
@@ -42,6 +43,7 @@ fun Dashboard(
     navControllerStudyTopic: () -> Unit,
     navControllerTestTopic: () -> Unit,
    backHandler: () -> Unit,
+    subjectsObjClick: SubjectsObjClick,
 ) {
 
     BackHandlerFun(backHandler = {
@@ -119,7 +121,7 @@ fun Dashboard(
                             navControllerOnSaveQuestionClick()
                         },
                     )
-                    1 -> Timeline()
+                    1 -> Timeline(subjectsObjClick = subjectsObjClick)
                     2 -> Settings()
                 }
             }

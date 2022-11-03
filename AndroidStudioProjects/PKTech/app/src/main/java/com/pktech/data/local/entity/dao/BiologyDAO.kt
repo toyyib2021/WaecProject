@@ -3,8 +3,7 @@ package com.pktech.data.local.entity.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.pktech.data.local.entity.*
-import com.pktech.utill.RequestState
-import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface BiologyDAO {

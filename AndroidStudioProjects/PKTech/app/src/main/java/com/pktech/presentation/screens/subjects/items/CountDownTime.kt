@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.pktech.utill.Constants
+import com.pktech.utill.Constants.SELECTED_STUDY_KEY
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -23,6 +24,9 @@ import com.pktech.utill.Constants
     seconds: String,
     minutes: String,
     hours: String,
+    secondsStudy: String,
+    minutesStudy: String,
+    hoursStudy: String,
     questionTitle: String,
     studyOrTestState: String
 
@@ -40,7 +44,7 @@ import com.pktech.utill.Constants
                     )
                 }
 
-                if (studyOrTestState == Constants.SELECTED_TEST_KEY){
+                if (studyOrTestState == Constants.SELECTED_TEST_KEY) {
                     Row(modifier = Modifier.weight(3f)) {
                         Text(
                             text = hours,
@@ -64,9 +68,39 @@ import com.pktech.utill.Constants
                         )
 
                     }
+
+                } else if (studyOrTestState == SELECTED_STUDY_KEY){
+                    Row(modifier = Modifier.weight(3f)) {
+                        Text(
+                            text = hoursStudy,
+                            style = MaterialTheme.typography.body2
+                        )
+                        Text(
+                            text = ":",
+                            style = MaterialTheme.typography.body2
+                        )
+                        Text(
+                            text = minutesStudy,
+                            style = MaterialTheme.typography.body2
+                        )
+                        Text(
+                            text = ":",
+                            style = MaterialTheme.typography.body2
+                        )
+                        Text(
+                            text = secondsStudy,
+                            style = MaterialTheme.typography.body2
+                        )
+
+//                    }
+                    }
+
+                } else if (studyOrTestState == Constants.SHOWANSWERFORTEST){
+                    Text(
+                        text = "",
+                        style = MaterialTheme.typography.body2
+                    )
                 }
-
-
 
             }
 

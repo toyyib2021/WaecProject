@@ -37,7 +37,10 @@ fun NavGraphBuilder.commerceObjYearNavGraph(
             route = CommerceObjYear.Obj2012.route
         ) {
 
-            Commerce2012Obj()
+            Commerce2012Obj(
+                onYesClickTest = {},
+                onYesClickStudy = {},
+            )
         }
 
         composable(

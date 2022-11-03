@@ -2,10 +2,20 @@ package com.pktech.utill
 
 object Constants {
 
+    const val LOADING = "loading"
+    const val COMPLETE = "complete"
+
+    const val SHOWANSWERFORTEST = "Show Answer For Test"
+    const val SELECTED_TEST_KEY = "1"
+    const val SELECTED_STUDY_KEY = "2"
+
+
     // DATABASE QUESTIONS CONSTANTS
     const val QUESTIONS_DATABASE = "questions_db"
     const val QUESTIONS_DATABASE_TABLE = "questions_table"
     const val SELECTED_OPTION_TABLE = "selected_option_table"
+    const val STUDY_TIMELINE_TABLE = "study_timeline_table"
+    const val TEST_TIMELINE_TABLE = "test_timeline_table"
 
     const val ENGLISH_QUESTION_TABLE = "english_questions_table"
     const val MATHS_QUESTIONS_TABLE = "maths_questions_table"
@@ -31,6 +41,8 @@ object Constants {
 
     // DATABASE QUESTION IMAGE CONSTANTS
     const val QUESTIONS_IMAGE_DATABASE_TABLE = "questions_image_table"
+    const val SAVE_QUESTION_DATABASE_TABLE = "save_question_table"
+
     const val MATH_QUESTIONS_IMAGE_DATABASE_TABLE = "math_questions_image_table"
     const val BIOLOGY_QUESTIONS_IMAGE_DATABASE_TABLE = "biology_questions_image_table"
 
@@ -38,12 +50,14 @@ object Constants {
 
     // REMOTE CONSTANTS
     const val BASE_URL = "https://pureknowledgeapi.herokuapp.com/"
+
+
+
     const val SELECTED_STUDY_TOPIC_ARGUMENT_KEY = "selectedStudyTopic"
     const val SELECTED_TEST_TOPIC_ARGUMENT_KEY = "selectedTestTopic"
     const val SELECTED_STUDY_YEAR_ARGUMENT_KEY = "selectedStudyYear"
     const val SELECTED_TEST_YEAR_ARGUMENT_KEY = "selectedTestYear"
-    const val SELECTED_TEST_KEY = "1"
-    const val SELECTED_STUDY_KEY = "2"
+
     const val LOGIN_KEY = "1"
     const val DETAILS_ARGUMENT_KEY = "getName"
 
@@ -77,4 +91,5 @@ object Constants {
     const val GOVERNMENT_THEORY_YEAR_ROUTE = "governmentTheoryYear"
     const val MARKETING_OBJ_YEAR_ROUTE = "marketingObjYear"
     const val MARKETING_THEORY_YEAR_ROUTE = "marketingTheoryYear"
+    const val OVERALL_TEST_RESULT_ROUTE = "overallTestResultRoute"
 }

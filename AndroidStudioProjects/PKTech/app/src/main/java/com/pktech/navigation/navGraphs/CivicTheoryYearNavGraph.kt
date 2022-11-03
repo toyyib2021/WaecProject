@@ -4,12 +4,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.pktech.navigation.screens.AgricultureObjYear
-import com.pktech.navigation.screens.AgricultureTheoryYear
 import com.pktech.navigation.screens.CivicEduTheoryYear
-import com.pktech.presentation.screens.subjects.agriculture.year.agric2012.Agric2012Obj
-import com.pktech.presentation.screens.subjects.civilEdu.year.civil2012.Civic2012Theory
-import com.pktech.presentation.screens.subjects.civilEdu.year.civil2013.Civic2013Theory
+
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2014.Civic2014Theory
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2015.Civic2015Theory
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2016.Civic2016Theory
@@ -19,8 +15,6 @@ import com.pktech.presentation.screens.subjects.civilEdu.year.civil2019.Civic201
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2020.Civic2020Theory
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2021.Civic2021Theory
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2022.Civic2022Theory
-import com.pktech.utill.Constants.AGRICULTURE_OBJ_YEAR_ROUTE
-import com.pktech.utill.Constants.AGRICULTURE_THEORY_YEAR_ROUTE
 import com.pktech.utill.Constants.CIVIC_THEORY_YEAR_ROUTE
 
 
@@ -32,17 +26,6 @@ fun NavGraphBuilder.civicTheoryYearNavGraph(
         startDestination = CivicEduTheoryYear.Theory2012.route,
         route = CIVIC_THEORY_YEAR_ROUTE
     ) {
-        composable(
-            route = CivicEduTheoryYear.Theory2012.route
-        ) {
-            Civic2012Theory()
-        }
-
-        composable(
-            route = CivicEduTheoryYear.Theory2013.route
-        ) {
-            Civic2013Theory()
-        }
 
         composable(
             route = CivicEduTheoryYear.Theory2014.route
