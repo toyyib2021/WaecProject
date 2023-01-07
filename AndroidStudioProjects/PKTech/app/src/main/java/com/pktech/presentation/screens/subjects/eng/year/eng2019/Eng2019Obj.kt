@@ -1,8 +1,6 @@
 package com.pktech.presentation.screens.subjects.eng.year.eng2019
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,11 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import com.pktech.data.local.StudyOrTestKey
 import com.pktech.data.local.entity.English
 import com.pktech.data.local.entity.SelectedOptionDB
 import com.pktech.data.local.utill.QuestionTitleKey
 import com.pktech.data.repository.UiRepository
+import com.pktech.navigation.screens.EnglishObjYear
 import com.pktech.presentation.screens.subjects.QuestionIndexSheet
 import com.pktech.presentation.screens.subjects.SubjectVM
 import com.pktech.presentation.screens.subjects.eng.year.eng2012.items.EnglishQuestion
@@ -29,8 +29,6 @@ import com.pktech.utill.BackHandlerFun
 import com.pktech.utill.Constants
 import com.pktech.utill.SaveQuestionConstants
 import kotlinx.coroutines.launch
-import java.text.DateFormat
-import java.util.*
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -48,16 +46,34 @@ fun Eng2019Obj(
     val studyOrTestKey = StudyOrTestKey(context)
     val questionTitleKey = QuestionTitleKey(context)
     val scope = rememberCoroutineScope()
+    val questionTitle = SaveQuestionConstants.ENGLISH2019
+    val questionRoute = EnglishObjYear.Obj2019.route
 
-
-
-    val studyOrTestKeyValue = studyOrTestKey.getKey.collectAsState(initial = "")
+    val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
+    val getSelectedOptionR = subjectVM.getSelectedOption.value
+    getSelectedOption::class.java
 
     val english2019 by english2019VM.getEnglish2019.observeAsState(listOf<English>())
     val english2019R = english2019VM.getEnglish2019.value
     english2019::class.java
 
+    val getSelectedOptionCol by subjectVM.getSelectedOptionCol.observeAsState(listOf())
+    val getSelectedOptionColR = subjectVM.getSelectedOptionCol.value
+    getSelectedOptionCol::class.java
+
+
+    // bottomSheet 1 - 100, bottomSheet 1 - 80, bottomSheet 1 - 60, bottomSheet1to100 1 - 50 //
+    val bottomSheetList = getSelectedOptionColR?.let { questionIndexSheet1to80(it) }
+    val questionSize = english2019R?.english?.size
+
+
+    val studyOrTestKeyState = studyOrTestKey.getKey.collectAsState(initial = "")
+    val studyOrTestKeyValue = studyOrTestKeyState.value
+    val questionTitleKeyState = questionTitleKey.getKey.collectAsState(initial = "")
+    val questionTitleKeyValue = questionTitleKeyState.value
+
     var currentIndex by remember { mutableStateOf(0) }
+
 
     val questionIndex = english2019R?.english?.get(currentIndex)?.objective?.id
     val currentQuestion = english2019R?.english?.get(currentIndex)?.objective?.question
@@ -71,7 +87,8 @@ fun Eng2019Obj(
     val underline = english2019R?.english?.get(currentIndex)?.objective?.questionUnderline
     val endQuestion = english2019R?.english?.get(currentIndex)?.objective?.questionEnd
 
-    subjectVM.addSaveQuestionData.value.questionTitle = SaveQuestionConstants.ENGLISH2019
+
+    subjectVM.addSaveQuestionData.value.questionTitle = questionTitle
 
     if (endQuestion != null) {
         subjectVM.addSaveQuestionData.value.questionEnd = endQuestion
@@ -106,22 +123,11 @@ fun Eng2019Obj(
         subjectVM.addSaveQuestionData.value.answer = answer
     }
 
-
-
     val alphabetOptionA = uiRepository.alphabetOptions[currentIndex].options[0]
     val alphabetOptionB = uiRepository.alphabetOptions[currentIndex].options[1]
     val alphabetOptionC = uiRepository.alphabetOptions[currentIndex].options[2]
     val alphabetOptionD = uiRepository.alphabetOptions[currentIndex].options[3]
 
-
-
-    val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
-    val getSelectedOptionR = subjectVM.getSelectedOption.value
-    getSelectedOption::class.java
-
-    val getSelectedOptionCol by subjectVM.getSelectedOptionCol.observeAsState(listOf())
-    val getSelectedOptionColR = subjectVM.getSelectedOptionCol.value
-    getSelectedOptionCol::class.java
 
     var selectedOptionState by remember { mutableStateOf("") }
     val currentSelectedOption = getSelectedOptionR?.get(currentIndex)?.selectedOption
@@ -131,45 +137,22 @@ fun Eng2019Obj(
         selectedOptionState  =  currentSelectedOption
 
     }
-
-
-    var expandedState by remember { mutableStateOf(false) }
     var openDialog by remember { mutableStateOf(false) }
     var openInstruction by remember { mutableStateOf(false) }
-    var correctOptionColor by remember { mutableStateOf("") }
+    var expandedState by remember { mutableStateOf(false) }
+
 
     val snackbarHostStateForSaveQuestion = remember { SnackbarHostState() }
 
-
-
-
     val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(key1 = subjectVM.minutesEng, key2 = subjectVM.secondsEng){
-        if (subjectVM.minutesEng == "05" && subjectVM.secondsEng == "00" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("You have five minute left")
-            }
-        } else if (subjectVM.minutesEng == "01" && subjectVM.secondsEng == "00" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("You have one minute left")
-            }
-        }
-        else if (subjectVM.minutesEng == "00" && subjectVM.secondsEng == "02" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("TIME UP")
-            }
-        } else if (subjectVM.minutesEng == "00" && subjectVM.secondsEng == "-5" ){
-            onYesClickTest()
-        }
-    }
 
-    LaunchedEffect(key1 = true){
-        if (studyOrTestKeyValue.value == Constants.SELECTED_TEST_KEY){
-            subjectVM.startEng()
-        } else{
-            subjectVM.startForStudy()
-        }
+    TimeUpAction(subjectVM, scope, snackbarHostState, onYesClickTest)
 
+
+    LaunchedEffect(key1 = studyOrTestKeyValue){
+        when(studyOrTestKeyValue){
+            Constants.SELECTED_TEST_KEY -> subjectVM.startEng()
+        }
     }
 
     val sheetState = rememberBottomSheetState(
@@ -180,8 +163,22 @@ fun Eng2019Obj(
     )
 
 
-
     BackHandlerFun(backHandler = { openDialog = true })
+    val correctOptionColourState = "A"
+    var correctOptionColor = ""
+
+
+    when(studyOrTestKeyValue){
+        Constants.SHOWANSWERFORTEST -> {
+            if (correctOptionColourState == "A") {
+                if (correctOption != null) {
+                    correctOptionColor = correctOption
+                }
+
+            }
+        }
+    }
+
 
 
     BottomSheetScaffold(
@@ -196,13 +193,9 @@ fun Eng2019Obj(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(White)) {
-
-                        getSelectedOptionColR?.let {
-                            questionIndexSheet1to80(
-                                optionSelectState = it,
-                            )
-                        }?.let {
+                            .background(White)
+                    ) {
+                        if (bottomSheetList != null) {
                             QuestionIndexSheet(
                                 onQuestionIndexClick = {
                                     currentIndex = it
@@ -213,9 +206,8 @@ fun Eng2019Obj(
                                             sheetState.collapse()
                                         }
                                     }
-
                                 },
-                                list = it
+                                list = bottomSheetList
                             )
                         }
 
@@ -230,89 +222,42 @@ fun Eng2019Obj(
         Scaffold(
             topBar = {
                 var resultKey by remember { mutableStateOf(0)}
-                var finailResult by remember { mutableStateOf(0)}
-                val splitList = SaveQuestionConstants.ENGLISH2019.split(" ")
+                val finailResult by remember { mutableStateOf(0)}
+                val splitList = questionTitle.split(" ")
                 val splitListSubject = splitList[0]
                 val splitListYear = splitList[1]
 
                 // Adding Test Event //
-                LaunchedEffect(key1 = resultKey){
-                    if(resultKey == 2){
-                        val timeAndDate: Date = Calendar.getInstance().time
-                        val formatedDate = DateFormat.getDateInstance().format(timeAndDate)
-                        val formatedTime = DateFormat.getTimeInstance().format(timeAndDate)
-
-                        val year = splitListYear
-                        val subject = splitListSubject
-
-                        subjectVM.addTestTimeline.value.year = year
-                        subjectVM.addTestTimeline.value.subject = subject
-                        subjectVM.addTestTimeline.value.date = formatedDate
-                        subjectVM.addTestTimeline.value.time = formatedTime
-
-                        var index = 0
-                        var result = 0
-                        if (english2019R != null) {
-                            val correctOption2 = english2019R.english.get(index).objective.correctOption
-                            val selectedOption = getSelectedOptionR?.get(index)?.selectedOption
-                            while (index < english2019R.english.size){
-                                if (english2019R.english.get(index).objective.correctOption ==
-                                    getSelectedOptionR?.get(index)?.selectedOption){
-                                    result++
-                                }
-                                index++
-                            }
-                            Log.i(ContentValues.TAG, "result: $selectedOption")
-                            Log.i(ContentValues.TAG, "result: $correctOption2")
-                            Log.i(ContentValues.TAG, "result: ${result}")
-                            Log.i(ContentValues.TAG, "result: $index")
-                        }
-                        finailResult = result
-                        if (english2019R != null) {
-                            subjectVM.addTestTimeline.value.testResult = "$result / ${english2019R.english.size}"
-                        }
-
-                        subjectVM.addTestTimeline()
-                    }
-                }
+                TestTimelineEnglish(
+                    resultKey,
+                    splitListYear,
+                    splitListSubject,
+                    subjectVM,
+                    english2019R,
+                    getSelectedOptionR,
+                    finailResult,
+                    questionTitleKey,
+                    questionRoute
+                )
 
                 // Adding Studying Event //
-                LaunchedEffect(key1 = resultKey){
-                    if (resultKey == 1){
-                        val timeAndDate: Date = Calendar.getInstance().time
-                        val formatedDate = DateFormat.getDateInstance().format(timeAndDate)
-                        val formatedTime = DateFormat.getTimeInstance().format(timeAndDate)
-
-                        val year = splitListYear
-                        val subject = splitListSubject
-                        val hoursOfStudy = subjectVM.hoursStudy
-                        val minutesOfStudy = subjectVM.minutesStudy
-
-                        subjectVM.addStudyTimeline.value.year = year
-                        subjectVM.addStudyTimeline.value.subject = subject
-                        subjectVM.addStudyTimeline.value.date = formatedDate
-                        subjectVM.addStudyTimeline.value.studyHours = hoursOfStudy
-                        subjectVM.addStudyTimeline.value.studyMinis = minutesOfStudy
-                        subjectVM.addStudyTimeline.value.time = formatedTime
-
-                        subjectVM.addStudyTimeline()
-
-                    }
-                }
+                StudyTimeline(resultKey, splitListYear, splitListSubject, subjectVM)
 
                 DisplayAlertDialog(
                     openDialog = openDialog,
                     closeDialog = { openDialog = false},
                     onYesClickedStudy = {
                         resultKey = 1
-                        onYesClickStudy() },
+                        onYesClickStudy()
+                    },
                     onYesClickedTest = {
-                        scope.launch {
-                            questionTitleKey.saveKey(SaveQuestionConstants.ENGLISH2019)
+                        if(studyOrTestKeyValue == Constants.SHOWANSWERFORTEST){
+                            onYesClickStudy()
                         }
                         resultKey = 2
-                        onYesClickTest() },
-                    studyOrTestKey = studyOrTestKeyValue.value
+                        onYesClickTest()
+                    },
+                    studyOrTestKey = studyOrTestKeyValue
                 )
                 StudyTopBar(
                     onEndQuizClick = {
@@ -321,8 +266,8 @@ fun Eng2019Obj(
                     hours = subjectVM.hoursEng,
                     minutes = subjectVM.minutesEng,
                     seconds = subjectVM.secondsEng,
-                    studyOrTestState = studyOrTestKeyValue.value,
-                    questionTitle = SaveQuestionConstants.ENGLISH2019,
+                    studyOrTestState = studyOrTestKeyValue,
+                    questionTitle = questionTitle,
                     secondsStudy = subjectVM.secondsStudy,
                     minutesStudy = subjectVM.minutesStudy,
                     hoursStudy = subjectVM.hoursStudy
@@ -339,30 +284,30 @@ fun Eng2019Obj(
                 StudyObjUIItems(
                     instructions = currentInstructions,
                     openInstruction = { openInstruction = true },
-                    questionSize = english2019R.english.size.toString(),
-                    studyOrTestState = studyOrTestKeyValue.value,
+                    questionSize = questionSize.toString(),
+                    studyOrTestState = studyOrTestKeyValue,
                     onSaveIconClick = {
-
-                            subjectVM.addSaveQuestion()
-                            scope.launch {
-                                snackbarHostStateForSaveQuestion.showSnackbar("Successfully Added To Save Question List")
-                            }
-
+                        subjectVM.addSaveQuestion()
+                        scope.launch {
+                            snackbarHostStateForSaveQuestion.showSnackbar("Successfully Added To Save Question List")
+                        }
                     },
                     onShowAnswerIconClick = {
                         if (!expandedState) {
-                            if (correctOption != null){
+                            if (correctOption != null) {
                                 correctOptionColor = correctOption
                             }
+
 
                         }
                         expandedState = !expandedState
                     },
                     onShowAnswerClick = {
                         if (!expandedState) {
-                            if (correctOption != null){
+                            if (correctOption != null) {
                                 correctOptionColor = correctOption
                             }
+
 
                         }
                         expandedState = !expandedState
@@ -395,30 +340,28 @@ fun Eng2019Obj(
                                 sheetState.collapse()
                             }
                         }
+
                     },
                     onPreviousBtClick = {
                         if (currentIndex == 0){
-
                             Toast.makeText(context, "Fist Question", Toast.LENGTH_SHORT).show()
                         }else if(expandedState){
                             expandedState = false
                             currentIndex--
-                            correctOptionColor = ""
                         }else{
                             currentIndex--
-                            correctOptionColor = ""
+
                         }
                     },
                     onNextBtClick = {
-                        if (currentIndex == 99){
+                        if (currentIndex == questionSize?.minus(1) ){
                             Toast.makeText(context, "Last Question", Toast.LENGTH_SHORT).show()
                         }else if(expandedState){
                             expandedState = false
                             currentIndex++
-                            correctOptionColor = ""
-                        }else {
+                        } else {
                             currentIndex++
-                            correctOptionColor = ""
+
                         }
                     },
                     optionA = {
@@ -492,6 +435,7 @@ fun Eng2019Obj(
                                         }
                                     },
                                     emptyCorrectOption = correctOptionColor
+
                                 )
                             }
                         }
@@ -517,6 +461,7 @@ fun Eng2019Obj(
                                         }
                                     },
                                     emptyCorrectOption = correctOptionColor
+
                                 )
                             }
                         }
@@ -525,11 +470,27 @@ fun Eng2019Obj(
                     snackbarHostStateForTime = snackbarHostState,
                     snackbarHostStateForSaveQuestion = snackbarHostStateForSaveQuestion
                 )
+
             }
 
         }
     }
 
 
+    when(studyOrTestKeyValue){
+        Constants.SELECTED_STUDY_KEY -> {
+            ComposableLifecycle{ source, event ->
+                when(event){
+                    Lifecycle.Event.ON_PAUSE -> {
+                        Toast.makeText(context, "On Pause", Toast.LENGTH_SHORT).show()
+                        subjectVM.pauseStudy()}
+                    Lifecycle.Event.ON_RESUME -> {
+                        Toast.makeText(context, "On Resume", Toast.LENGTH_SHORT).show()
+                        subjectVM.startForStudy()}
+                    else -> {}
+                }
+            }
+        }
+    }
 }
 

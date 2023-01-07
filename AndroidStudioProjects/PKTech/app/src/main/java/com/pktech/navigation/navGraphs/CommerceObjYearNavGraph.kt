@@ -4,10 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.pktech.navigation.screens.AgricultureObjYear
-import com.pktech.navigation.screens.BiologyObjYear
-import com.pktech.navigation.screens.CivicEduObjYear
-import com.pktech.navigation.screens.CommerceObjYear
+import com.pktech.navigation.screens.*
 import com.pktech.presentation.screens.subjects.agriculture.year.agric2012.Agric2012Obj
 import com.pktech.presentation.screens.subjects.commerce.year.comme2012.Commerce2012Obj
 import com.pktech.presentation.screens.subjects.commerce.year.comme2013.Commerce2013Obj
@@ -38,57 +35,126 @@ fun NavGraphBuilder.commerceObjYearNavGraph(
         ) {
 
             Commerce2012Obj(
-                onYesClickTest = {},
-                onYesClickStudy = {},
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
             )
         }
 
         composable(
             route = CommerceObjYear.Obj2013.route
         ) {
-            Commerce2013Obj()
+            Commerce2013Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CommerceObjYear.Obj2014.route
         ) {
-            Commerce2014Obj()
+            Commerce2014Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CommerceObjYear.Obj2015.route
         ) {
-            Commerce2015Obj()
+            Commerce2015Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CommerceObjYear.Obj2016.route
         ) {
-            Commerce2016Obj()
+            Commerce2016Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CommerceObjYear.Obj2017.route
         ) {
-            Commerce2017Obj()
+            Commerce2017Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CommerceObjYear.Obj2018.route
         ) {
-            Commerce2018Obj()
+            Commerce2018Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CommerceObjYear.Obj2019.route
         ) {
-            Commerce2019Obj()
+            Commerce2019Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CommerceObjYear.Obj2020.route
         ) {
-            Commerce2020Obj()
+            Commerce2020Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(

@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pktech.navigation.screens.AgricultureObjYear
+import com.pktech.navigation.screens.Screen
 import com.pktech.presentation.screens.subjects.agriculture.year.agric2012.Agric2012Obj
 import com.pktech.presentation.screens.subjects.agriculture.year.agric2013.Agric2013Obj
 import com.pktech.presentation.screens.subjects.agriculture.year.agric2014.Agric2014Obj
@@ -30,8 +31,13 @@ fun NavGraphBuilder.agricultureObjYearNavGraph(
             route = AgricultureObjYear.Obj2012.route
         ) {
             Agric2012Obj(
-                onYesClickStudy = {},
-                onYesClickTest = {}
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
             )
 
         }
@@ -39,49 +45,113 @@ fun NavGraphBuilder.agricultureObjYearNavGraph(
         composable(
             route = AgricultureObjYear.Obj2013.route
         ) {
-            Agric2013Obj()
+            Agric2013Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AgricultureObjYear.Obj2014.route
         ) {
-            Agric2014Obj()
+            Agric2014Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AgricultureObjYear.Obj2015.route
         ) {
-            Agric2015Obj()
+            Agric2015Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AgricultureObjYear.Obj2016.route
         ) {
-            Agric2016Obj()
+            Agric2016Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AgricultureObjYear.Obj2017.route
         ) {
-            Agric2017Obj()
+            Agric2017Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AgricultureObjYear.Obj2018.route
         ) {
-            Agric2018Obj()
+            Agric2018Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AgricultureObjYear.Obj2019.route
         ) {
-            Agric2019Obj()
+            Agric2019Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AgricultureObjYear.Obj2020.route
         ) {
-            Agric2020Obj()
+            Agric2020Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(

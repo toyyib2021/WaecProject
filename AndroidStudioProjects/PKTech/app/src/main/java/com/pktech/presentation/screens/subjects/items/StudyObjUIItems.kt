@@ -73,7 +73,9 @@ fun StudyObjUIItems(
                         .padding(20.dp)
                 ) {
                     Row(
-                        modifier = Modifier.padding(8.dp).background(Color.Red),
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .background(Color.Red),
                         horizontalArrangement = Arrangement.Center,
                     ) {
                         Icon(imageVector = Icons.Default.Notifications,
@@ -92,16 +94,16 @@ fun StudyObjUIItems(
 
         SectionOne(
             modifier = Modifier
-                .weight(9f)
+                .weight(5f)
                 .fillMaxWidth(),
             instructions = instructions,
             currentAnswer = currentAnswer,
             questionIndex = questionIndex,
             currentQuestion = currentQuestion,
-            optionA = optionA,
-            optionB = optionB,
-            optionC = optionC,
-            optionD = optionD,
+//            optionA = optionA,
+//            optionB = optionB,
+//            optionC = optionC,
+//            optionD = optionD,
             questionSize = questionSize,
             studyOrTestState = studyOrTestState,
             onShowAnswerClick = onShowAnswerClick,
@@ -114,13 +116,21 @@ fun StudyObjUIItems(
         Spacer(modifier = Modifier.padding(10.dp))
 
         Column(modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .weight(4f),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                modifier = Modifier.clickable { onGotoQuestionNoClick() },
-                text = "Goto Question No.")
+            LazyColumn{
+                item{
+                    OptionSection(
+                        optionA = optionA,
+                        optionB = optionB,
+                        optionC = optionC,
+                        optionD = optionD
+                    )
+                }
+            }
         }
 
         SnackbarHost(
@@ -134,7 +144,10 @@ fun StudyObjUIItems(
                     backgroundColor = DarkBlue
                 ) {
                     Row(
-                        modifier = Modifier.padding(10.dp).background(DarkBlue).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .background(DarkBlue)
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                     ) {
 
@@ -147,17 +160,15 @@ fun StudyObjUIItems(
                 }
             }
         )
-        Spacer(modifier = Modifier.padding(10.dp))
 
         BottomSection(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
             onNextBtClick = onNextBtClick,
-            onPreviousBtClick = onPreviousBtClick
+            onPreviousBtClick = onPreviousBtClick,
+            onGotoQuestionNoClick = onGotoQuestionNoClick
         )
-
-
 
     }
 
@@ -171,10 +182,10 @@ fun SectionOne(
     currentAnswer:@Composable () -> Unit,
     questionIndex: String,
     currentQuestion: @Composable () -> Unit,
-    optionA:@Composable () -> Unit,
-    optionB:@Composable () -> Unit,
-    optionC:@Composable () -> Unit,
-    optionD:@Composable () -> Unit,
+//    optionA:@Composable () -> Unit,
+//    optionB:@Composable () -> Unit,
+//    optionC:@Composable () -> Unit,
+//    optionD:@Composable () -> Unit,
     questionSize: String,
     studyOrTestState: String,
     onShowAnswerClick: () -> Unit,
@@ -217,17 +228,10 @@ fun SectionOne(
 //
 //                )
 //            }
-            Spacer(modifier = Modifier.padding(5.dp))
-            OptionSection(
-                optionA,
-                optionB,
-                optionC,
-                optionD
-
-            )
 
 
         }
+
     }
 
 
@@ -430,6 +434,7 @@ fun BottomSection(
     modifier: Modifier,
     onNextBtClick: () -> Unit,
     onPreviousBtClick: () -> Unit,
+    onGotoQuestionNoClick: () -> Unit,
 ) {
 
     Column(
@@ -440,6 +445,9 @@ fun BottomSection(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            Text(
+                modifier = Modifier.clickable { onGotoQuestionNoClick() },
+                text = "Goto Question No.")
 
             Button(
                 modifier = Modifier.width(150.dp),

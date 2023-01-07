@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pktech.navigation.screens.CivicEduTheoryYear
-
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2014.Civic2014Theory
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2015.Civic2015Theory
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2016.Civic2016Theory
@@ -21,9 +20,8 @@ import com.pktech.utill.Constants.CIVIC_THEORY_YEAR_ROUTE
 fun NavGraphBuilder.civicTheoryYearNavGraph(
     navController: NavHostController
 ) {
-
     navigation(
-        startDestination = CivicEduTheoryYear.Theory2012.route,
+        startDestination = CivicEduTheoryYear.Theory2014.route,
         route = CIVIC_THEORY_YEAR_ROUTE
     ) {
 

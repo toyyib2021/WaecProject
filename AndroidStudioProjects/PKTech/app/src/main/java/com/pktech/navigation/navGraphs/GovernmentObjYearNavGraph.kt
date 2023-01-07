@@ -35,55 +35,100 @@ fun NavGraphBuilder.governmentObjYearNavGraph(
         composable(
             route = GovernmentObjYear.Obj2012.route
         ) {
-            Govt2012Obj(onYesClickTest = {}, onYesClickStudy = {})
-
+            Govt2012Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+                )
         }
         composable(
             route = GovernmentObjYear.Obj2013.route
         ) {
-            Govt2013Obj()
+            Govt2013Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+
+                )
         }
 
         composable(
             route = GovernmentObjYear.Obj2014.route
         ) {
-            Govt2014Obj()
+            Govt2014Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = GovernmentObjYear.Obj2015.route
         ) {
-            Govt2015Obj()
+            Govt2015Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = GovernmentObjYear.Obj2016.route
         ) {
-            Govt2016Obj()
+            Govt2016Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = GovernmentObjYear.Obj2017.route
         ) {
-            Govt2017Obj()
+            Govt2017Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = GovernmentObjYear.Obj2018.route
         ) {
-            Govt2018Obj()
+            Govt2018Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = GovernmentObjYear.Obj2019.route
         ) {
-            Govt2019Obj()
+            Govt2019Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = GovernmentObjYear.Obj2020.route
         ) {
-            Govt2020Obj()
+            Govt2020Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pktech.navigation.screens.AgricultureObjYear
 import com.pktech.navigation.screens.EconomicsObjYear
+import com.pktech.navigation.screens.Screen
 import com.pktech.presentation.screens.subjects.agriculture.year.agric2012.Agric2012Obj
 import com.pktech.presentation.screens.subjects.economics.year.eco2012.Eco2012Obj
 import com.pktech.presentation.screens.subjects.economics.year.eco2013.Eco2013Obj
@@ -32,56 +33,128 @@ fun NavGraphBuilder.economicsObjYearNavGraph(
         composable(
             route = EconomicsObjYear.Obj2012.route
         ) {
-            Eco2012Obj(onYesClickTest = {}, onYesClickStudy = {})
+            Eco2012Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
 
         }
 
         composable(
             route = EconomicsObjYear.Obj2013.route
         ) {
-            Eco2013Obj()
+            Eco2013Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = EconomicsObjYear.Obj2014.route
         ) {
-            Eco2014Obj()
+            Eco2014Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = EconomicsObjYear.Obj2015.route
         ) {
-            Eco2015Obj()
+            Eco2015Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = EconomicsObjYear.Obj2016.route
         ) {
-            Eco2016Obj()
+            Eco2016Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = EconomicsObjYear.Obj2017.route
         ) {
-            Eco2017Obj()
+            Eco2017Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = EconomicsObjYear.Obj2018.route
         ) {
-            Eco2018Obj()
+            Eco2018Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = EconomicsObjYear.Obj2019.route
         ) {
-            Eco2019Obj()
+            Eco2019Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = EconomicsObjYear.Obj2020.route
         ) {
-            Eco2020Obj()
+            Eco2020Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(

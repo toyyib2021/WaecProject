@@ -48,7 +48,7 @@ fun SplashScreen(
             )
         )
         navController.popBackStack()
-        if (getLoginScreenKey.value == LOGIN_KEY) {
+        if (getLoginScreenKey.value != "") {
             navController.navigate(Screen.DashBoard.route)
         } else {
             navController.navigate(Screen.SignUp.route)

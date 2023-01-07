@@ -34,56 +34,101 @@ fun NavGraphBuilder.physicsObjYearNavGraph(
         composable(
             route = PhysicsObjYear.Obj2012.route
         ) {
-            Phy2012Obj(onYesClickStudy = {}, onYesClickTest = {})
+            Phy2012Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
 
         }
 
         composable(
             route = PhysicsObjYear.Obj2013.route
         ) {
-            Phy2013Obj()
+            Phy2013Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = PhysicsObjYear.Obj2014.route
         ) {
-            Phy2014Obj()
+            Phy2014Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = PhysicsObjYear.Obj2015.route
         ) {
-            Phy2015Obj()
+            Phy2015Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = PhysicsObjYear.Obj2016.route
         ) {
-            Phy2016Obj()
+            Phy2016Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = PhysicsObjYear.Obj2017.route
         ) {
-            Phy2017Obj()
+            Phy2017Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = PhysicsObjYear.Obj2018.route
         ) {
-            Phy2018Obj()
+            Phy2018Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = PhysicsObjYear.Obj2019.route
         ) {
-            Phy2019Obj()
+            Phy2019Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = PhysicsObjYear.Obj2020.route
         ) {
-            Phy2020Obj()
+            Phy2020Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(

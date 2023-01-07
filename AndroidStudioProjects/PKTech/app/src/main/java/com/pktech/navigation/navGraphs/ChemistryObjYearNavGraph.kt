@@ -36,57 +36,126 @@ fun NavGraphBuilder.chemistryObjYearNavGraph(
             route = ChemistryObjYear.Obj2012.route
         ) {
             Chy2012Obj(
-                onYesClickStudy = {},
-                onYesClickTest = {}
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
             )
         }
 
         composable(
             route = ChemistryObjYear.Obj2013.route
         ) {
-            Chy2013Obj()
+            Chy2013Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = ChemistryObjYear.Obj2014.route
         ) {
-            Chy2014Obj()
+            Chy2014Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = ChemistryObjYear.Obj2015.route
         ) {
-            Chy2015Obj()
+            Chy2015Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = ChemistryObjYear.Obj2016.route
         ) {
-            Chy2016Obj()
+            Chy2016Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = ChemistryObjYear.Obj2017.route
         ) {
-            Chy2017Obj()
+            Chy2017Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = ChemistryObjYear.Obj2018.route
         ) {
-            Chy2018Obj()
+            Chy2018Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = ChemistryObjYear.Obj2019.route
         ) {
-            Chy2019Obj()
+//            Chy2019Obj(
+////                onYesClickTest = {navController.navigate(Screen.Result.route){
+////                    popUpTo(Screen.StudyYear.route){inclusive = true}
+////                } },
+////                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+////                    popUpTo(Screen.StudyYear.route){inclusive = true}
+////                }
+////                }
+//            )
         }
 
         composable(
             route = ChemistryObjYear.Obj2020.route
         ) {
-            Chy2020Obj()
+            Chy2020Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(

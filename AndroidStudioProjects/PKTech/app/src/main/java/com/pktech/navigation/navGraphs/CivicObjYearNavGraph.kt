@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pktech.navigation.screens.CivicEduObjYear
+import com.pktech.navigation.screens.Screen
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2014.Civic2014Obj
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2015.Civic2015Obj
 import com.pktech.presentation.screens.subjects.civilEdu.year.civil2016.Civic2016Obj
@@ -29,45 +30,98 @@ fun NavGraphBuilder.civicObjYearNavGraph(
             route = CivicEduObjYear.Obj2014.route
         ) {
             Civic2014Obj(
-                onYesClickStudy = {},
-                onYesClickTest = {}
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
             )
         }
 
         composable(
             route = CivicEduObjYear.Obj2015.route
         ) {
-            Civic2015Obj()
+            Civic2015Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CivicEduObjYear.Obj2016.route
         ) {
-            Civic2016Obj()
+            Civic2016Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CivicEduObjYear.Obj2017.route
         ) {
-            Civic2017Obj()
+            Civic2017Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CivicEduObjYear.Obj2018.route
         ) {
-            Civic2018Obj()
+            Civic2018Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CivicEduObjYear.Obj2019.route
         ) {
-            Civic2019Obj()
+            Civic2019Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = CivicEduObjYear.Obj2020.route
         ) {
-            Civic2020Obj()
+            Civic2020Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(

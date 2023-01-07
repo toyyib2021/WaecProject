@@ -161,7 +161,7 @@ fun questionIndexSheetRepo(optionSelectState: List<String>): List<QuestionIndexS
                     VeryDarkGray
                 }
             },
-            txColor = when (optionSelectState[0]) {
+            txColor = when (optionSelectState[10]) {
                 "" -> VeryDarkGray
                 else -> {
                     White
@@ -900,7 +900,7 @@ fun questionIndexSheet1to80(optionSelectState: List<String>): List<QuestionIndex
                     VeryDarkGray
                 }
             },
-            txColor = when (optionSelectState[0]) {
+            txColor = when (optionSelectState[10]) {
                 "" -> VeryDarkGray
                 else -> {
                     White
@@ -2079,7 +2079,7 @@ fun questionIndexSheet1to60(optionSelectState: List<String>): List<QuestionIndex
                     VeryDarkGray
                 }
             },
-            txColor = when (optionSelectState[0]) {
+            txColor = when (optionSelectState[10]) {
                 "" -> VeryDarkGray
                 else -> {
                     White
@@ -2964,7 +2964,7 @@ fun questionIndexSheetRepoEng(optionSelectState: List<String>): List<QuestionInd
                     VeryDarkGray
                 }
             },
-            txColor = when (optionSelectState[0]) {
+            txColor = when (optionSelectState[10]) {
                 "" -> VeryDarkGray
                 else -> {
                     White

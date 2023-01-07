@@ -22,6 +22,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.io.IOException
+import java.lang.StringBuilder
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,7 +55,6 @@ class AuthVM @Inject constructor(
     fun addAllSubjectsAndImage(context: Context)  {
         kotlin.run {
             val job =  viewModelScope.launch(Dispatchers.IO) {
-                val loginScreenKey = LoginScreenKey(context)
                 try {
                         repository.deleteAllImage()
                         mathsRepositoryw.deleteAll()
@@ -70,7 +71,6 @@ class AuthVM @Inject constructor(
                         governmentRepositoryw.deleteAllGovernment()
                         delay(5000)
                         addingAllImage(context = context)
-                        loginScreenKey.saveKey(Constants.LOGIN_KEY)
                         mathsRepositoryw.addMaths(addMaths = api.getAllMathematics())
                         accountRepositoryw.addAccount(addMath = api.getAllAccount())
                         englishRepositoryw.addEnglish(addEnglish = api.getAllEnglish())
@@ -116,6 +116,17 @@ class AuthVM @Inject constructor(
 
     }
 
+    fun generateAlphallumeric(length: Int): String {
+        val LETTERS = "abcdefghijklmnopqrstuwaxyz"
+        val NUMBER = "0123456789"
+        val ALPHAIRMERIC =
+            (LETTERS + LETTERS.uppercase(Locale.getDefault()) + NUMBER).toCharArray()
+        val result = StringBuilder()
+        for (i in 0 until length) {
+            result.append(ALPHAIRMERIC[java.util.Random().nextInt(ALPHAIRMERIC.size)])
+        }
+        return result.toString()
+    }
 
 }
 

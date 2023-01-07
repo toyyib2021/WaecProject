@@ -120,8 +120,8 @@ fun NavGraphBuilder.dashboardNavGraph(
                     on2022Click = {navController.navigate(EconomicsObjYear.Obj2022.route)}
                 ),
                 onCivEduObjYearClick = OnYearClick(
-                    on2012Click = {navController.navigate(CivicEduObjYear.Obj2012.route)},
-                    on2013Click = {navController.navigate(CivicEduObjYear.Obj2013.route)},
+                    on2012Click = {},
+                    on2013Click = {},
                     on2014Click = {navController.navigate(CivicEduObjYear.Obj2014.route)},
                     on2015Click = {navController.navigate(CivicEduObjYear.Obj2015.route)},
                     on2016Click = {navController.navigate(CivicEduObjYear.Obj2016.route)},
@@ -291,8 +291,8 @@ fun NavGraphBuilder.dashboardNavGraph(
                     on2022Click = {navController.navigate(EconomicsTheoryYear.Theory2022.route)}
                 ),
                 onCivEduTheoryYearClick = OnYearClick(
-                    on2012Click = {navController.navigate(CivicEduTheoryYear.Theory2012.route)},
-                    on2013Click = {navController.navigate(CivicEduTheoryYear.Theory2013.route)},
+                    on2012Click = {},
+                    on2013Click = {},
                     on2014Click = {navController.navigate(CivicEduTheoryYear.Theory2014.route)},
                     on2015Click = {navController.navigate(CivicEduTheoryYear.Theory2015.route)},
                     on2016Click = {navController.navigate(CivicEduTheoryYear.Theory2016.route)},
@@ -476,8 +476,8 @@ fun NavGraphBuilder.dashboardNavGraph(
                     on2022Click = {navController.navigate(EconomicsObjYear.Obj2022.route)}
                 ),
                 onCivEduObjYearClick = OnYearClick(
-                    on2012Click = {navController.navigate(CivicEduObjYear.Obj2012.route)},
-                    on2013Click = {navController.navigate(CivicEduObjYear.Obj2013.route)},
+                    on2012Click = {},
+                    on2013Click = {},
                     on2014Click = {navController.navigate(CivicEduObjYear.Obj2014.route)},
                     on2015Click = {navController.navigate(CivicEduObjYear.Obj2015.route)},
                     on2016Click = {navController.navigate(CivicEduObjYear.Obj2016.route)},
@@ -647,8 +647,8 @@ fun NavGraphBuilder.dashboardNavGraph(
                     on2022Click = {navController.navigate(EconomicsTheoryYear.Theory2022.route)}
                 ),
                 onCivEduTheoryYearClick = OnYearClick(
-                    on2012Click = {navController.navigate(CivicEduTheoryYear.Theory2012.route)},
-                    on2013Click = {navController.navigate(CivicEduTheoryYear.Theory2013.route)},
+                    on2012Click = {},
+                    on2013Click = {},
                     on2014Click = {navController.navigate(CivicEduTheoryYear.Theory2014.route)},
                     on2015Click = {navController.navigate(CivicEduTheoryYear.Theory2015.route)},
                     on2016Click = {navController.navigate(CivicEduTheoryYear.Theory2016.route)},

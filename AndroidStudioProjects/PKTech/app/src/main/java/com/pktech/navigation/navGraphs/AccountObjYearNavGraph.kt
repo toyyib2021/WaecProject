@@ -45,49 +45,113 @@ fun NavGraphBuilder.accountObjYearNavGraph(
         composable(
             route = AccountObjYear.Obj2013.route
         ) {
-            Account2013Obj()
+            Account2013Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AccountObjYear.Obj2014.route
         ) {
-            Account2014Obj()
+            Account2014Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AccountObjYear.Obj2015.route
         ) {
-            Account2015Obj()
+            Account2015Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AccountObjYear.Obj2016.route
         ) {
-            Account2016Obj()
+            Account2016Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AccountObjYear.Obj2017.route
         ) {
-            Account2017Obj()
+            Account2017Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AccountObjYear.Obj2018.route
         ) {
-            Account2018Obj()
+            Account2018Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AccountObjYear.Obj2019.route
         ) {
-            Account2019Obj()
+            Account2019Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = AccountObjYear.Obj2020.route
         ) {
-            Account2020Obj()
+//            Account2020Obj(
+//                onYesClickTest = {navController.navigate(Screen.Result.route){
+//                    popUpTo(Screen.StudyYear.route){inclusive = true}
+//                } },
+//                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+//                    popUpTo(Screen.StudyYear.route){inclusive = true}
+//                }
+//                }
+//            )
         }
 
         composable(

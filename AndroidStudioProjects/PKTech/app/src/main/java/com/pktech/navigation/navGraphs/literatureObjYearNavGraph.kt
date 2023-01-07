@@ -35,55 +35,100 @@ fun NavGraphBuilder.literatureObjYearNavGraph(
         composable(
             route = LiteratureObjYear.Obj2012.route
         ) {
-            Lit2012Obj()
+            Lit2012Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2013.route
         ) {
-            Lit2013Obj()
+            Lit2013Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2014.route
         ) {
-            Lit2014Obj()
+            Lit2014Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2015.route
         ) {
-            Lit2015Obj()
+            Lit2015Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2016.route
         ) {
-            Lit2016Obj()
+            Lit2016Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2017.route
         ) {
-            Lit2017Obj()
+            Lit2017Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2018.route
         ) {
-            Lit2018Obj()
+            Lit2018Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2019.route
         ) {
-            Lit2019Obj()
+            Lit2019Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(
             route = LiteratureObjYear.Obj2020.route
         ) {
-            Lit2020Obj()
+            Lit2020Obj(
+                onYesClickTest = { navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = { navController.navigate(Screen.DashBoard.route)},
+            )
         }
 
         composable(

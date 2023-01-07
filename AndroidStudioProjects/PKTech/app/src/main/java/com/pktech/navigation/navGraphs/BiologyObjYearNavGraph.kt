@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.pktech.navigation.screens.AgricultureObjYear
 import com.pktech.navigation.screens.BiologyObjYear
 import com.pktech.navigation.screens.CivicEduObjYear
+import com.pktech.navigation.screens.Screen
 import com.pktech.presentation.screens.subjects.agriculture.year.agric2012.Agric2012Obj
 import com.pktech.presentation.screens.subjects.biology.year.bio2012.Bio2012Obj
 import com.pktech.presentation.screens.subjects.biology.year.bio2013.Bio2013Obj
@@ -36,61 +37,129 @@ fun NavGraphBuilder.biologyObjYearNavGraph(
             route = BiologyObjYear.Obj2012.route
         ) {
             Bio2012Obj(
-                onYesClickTest = {},
-                onYesClickStudy = {}
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
             )
-
         }
 
         composable(
             route = BiologyObjYear.Obj2013.route
         ) {
-            Bio2013Obj()
+            Bio2013Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = BiologyObjYear.Obj2014.route
         ) {
-            Bio2014Obj()
+            Bio2014Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = BiologyObjYear.Obj2015.route
         ) {
-            Bio2015Obj()
+            Bio2015Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = BiologyObjYear.Obj2016.route
         ) {
-            Bio2016Obj()
+//            Bio2016Obj(
+//                onYesClickTest = {navController.navigate(Screen.Result.route){
+//                    popUpTo(Screen.StudyYear.route){inclusive = true}
+//                } },
+//                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+//                    popUpTo(Screen.StudyYear.route){inclusive = true}
+//                }
+//                }
+//            )
 
         }
 
         composable(
             route = BiologyObjYear.Obj2017.route
         ) {
-            Bio2017Obj()
+            Bio2017Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(
             route = BiologyObjYear.Obj2018.route
         ) {
-            Bio2018Obj()
+            Bio2018Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
 
         }
 
         composable(
             route = BiologyObjYear.Obj2019.route
         ) {
-            Bio2019Obj()
+            Bio2019Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
 
         }
 
         composable(
             route = BiologyObjYear.Obj2020.route
         ) {
-            Bio2020Obj()
+            Bio2020Obj(
+                onYesClickTest = {navController.navigate(Screen.Result.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                } },
+                onYesClickStudy = {navController.navigate(Screen.DashBoard.route){
+                    popUpTo(Screen.StudyYear.route){inclusive = true}
+                }
+                }
+            )
         }
 
         composable(

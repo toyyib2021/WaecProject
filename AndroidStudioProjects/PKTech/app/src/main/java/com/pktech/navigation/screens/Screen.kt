@@ -193,8 +193,6 @@ sealed class EconomicsObjYear(val route: String){
 
 
 sealed class CivicEduObjYear(val route: String){
-    object Obj2012: CivicEduObjYear(route = "civic_education_obj2012_screen")
-    object Obj2013: CivicEduObjYear(route = "civic_education_obj2013_screen")
     object Obj2014: CivicEduObjYear(route = "civic_education_obj2014_screen")
     object Obj2015: CivicEduObjYear(route = "civic_education_obj2015_screen")
     object Obj2016: CivicEduObjYear(route = "civic_education_obj2016_screen")
@@ -206,8 +204,6 @@ sealed class CivicEduObjYear(val route: String){
     object Obj2022: CivicEduObjYear(route = "civic_education_obj2022_screen")
 }
 sealed class CivicEduTheoryYear(val route: String){
-    object Theory2012: CivicEduTheoryYear(route = "civic_education_theory2012_screen")
-    object Theory2013: CivicEduTheoryYear(route = "civic_education_theory2013_screen")
     object Theory2014: CivicEduTheoryYear(route = "civic_education_theory2014_screen")
     object Theory2015: CivicEduTheoryYear(route = "civic_education_theory2015_screen")
     object Theory2016: CivicEduTheoryYear(route = "civic_education_theory2016_screen")

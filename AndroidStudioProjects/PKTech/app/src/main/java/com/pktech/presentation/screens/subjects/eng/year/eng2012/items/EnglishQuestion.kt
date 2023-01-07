@@ -11,6 +11,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.pktech.presentation.screens.subjects.eng.Acct2012No48
 import com.pktech.ui.theme.VeryDarkGray
 
     /// OBJECTIVE ///
@@ -23,7 +24,7 @@ fun EnglishQuestion(
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
-
+        Acct2012No48()
         CurrentQuestion(option = question, underline = underline, endLine =endLine ,)
     }
 }

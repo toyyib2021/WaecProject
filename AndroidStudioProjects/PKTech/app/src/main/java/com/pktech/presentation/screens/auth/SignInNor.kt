@@ -1,6 +1,7 @@
 package com.pktech.presentation.screens.auth
 
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,14 +13,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.pktech.R
+import com.pktech.data.local.LoginScreenKey
+import com.pktech.domain.model.ActivationPin
+import com.pktech.presentation.screens.dashboard.isInternetAvailable
 import com.pktech.ui.theme.*
+import com.pktech.utill.Constants
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -27,6 +38,27 @@ fun SignInNor(
     onSignInClick: () -> Unit,
     onSignUpClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val authVM : AuthVM = hiltViewModel()
+    val loginScreenKey = LoginScreenKey(context)
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val scope =  rememberCoroutineScope()
+    val database = Firebase.database
+    val myRef = database.getReference("pin")
+
+
+
+
+    var loginCheck by remember { mutableStateOf("")}
+    LaunchedEffect(key1 = authVM.isLoading, key2 = loginCheck){
+        if(authVM.isLoading == Constants.COMPLETE && loginCheck == Constants.COMPLETE) {
+            onSignInClick()
+        }
+    }
+
+
+
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -39,7 +71,11 @@ fun SignInNor(
         var password by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
 
-        val ( iv, titleTv,
+        val pin = authVM.generateAlphallumeric(12)
+        val activationPinDetails = ActivationPin(email, pin)
+
+
+        val (iv, titleTv,
             emailEt, passwordEt,
             loginBt, signupTv) = createRefs()
 
@@ -161,12 +197,69 @@ fun SignInNor(
                 backgroundColor = StrongBlue2
             ),
             shape = RoundedCornerShape(9.dp),
-            onClick = { onSignInClick() }) {
-            Text(
-                text = stringResource(id = R.string.sign_in),
-                color = Color.White,
-                style = MaterialTheme.typography.body2
-            )
+            onClick = {
+                if (isInternetAvailable(context)) {
+                    if (email != "" && password != "") {
+                        authVM.isLoading = Constants.LOADING
+                        firebaseAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener {
+                                if (it.isSuccessful()) {
+                                    myRef.push().setValue(activationPinDetails)
+                                    authVM.addAllSubjectsAndImage(context = context)
+                                    Toast.makeText(
+                                        context,
+                                        "Login Successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    scope.launch {
+                                        loginScreenKey.saveKey(pin)
+                                    }
+                                    loginCheck = Constants.COMPLETE
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        it.exception?.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    authVM.isLoading = ""
+                                }
+                            }
+
+                    } else {
+                        Toast.makeText(context, "empty fields", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Check Your Internet Connection", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+
+        ) {
+            when (authVM.isLoading) {
+                Constants.LOADING -> {
+                    Text(
+                        text = stringResource(R.string.loading),
+                        color = Color.White,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+                Constants.COMPLETE -> {
+                    Text(
+                        text = "Successful",
+                        color = Color.White,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+                else -> {
+                    Text(
+                        text = stringResource(id = R.string.sign_in),
+                        color = Color.White,
+                        style = MaterialTheme.typography.body2
+                    )
+
+                }
+            }
         }
 
         Text(

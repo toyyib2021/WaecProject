@@ -23,10 +23,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.pktech.R
+import com.pktech.data.local.LoginScreenKey
+import com.pktech.domain.model.ActivationPin
 import com.pktech.presentation.screens.dashboard.isInternetAvailable
 import com.pktech.ui.theme.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.pktech.utill.Constants.COMPLETE
 import com.pktech.utill.Constants.LOADING
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpNor(
@@ -35,9 +40,14 @@ fun SignUpNor(
 ) {
     val context = LocalContext.current
     val authVM : AuthVM = hiltViewModel()
-    var firebaseAuth = FirebaseAuth.getInstance()
-
+    val loginScreenKey = LoginScreenKey(context)
+    val firebaseAuth = FirebaseAuth.getInstance()
     val scope =  rememberCoroutineScope()
+    val database = Firebase.database
+    val myRef = database.getReference("pin")
+
+
+
 
     var loginCheck by remember { mutableStateOf("")}
     LaunchedEffect(key1 = authVM.isLoading, key2 = loginCheck){
@@ -60,6 +70,8 @@ fun SignUpNor(
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
 
+        val pin =  authVM.generateAlphallumeric(12)
+        val activationPinDetails = ActivationPin(email, pin, phone)
 
         val (iv, titleTv,
             emailEt, phoneEt,
@@ -248,6 +260,8 @@ fun SignUpNor(
 
         )
 
+
+        //* SIGN UP BUTTON *//
         Button(
             modifier = Modifier
                 .constrainAs(signupBt) {
@@ -264,13 +278,17 @@ fun SignUpNor(
             shape = RoundedCornerShape(9.dp),
             onClick = {
                 if (isInternetAvailable(context)){
-                    if(email != "" && email != "" && phone != "" && password != "" && confirmPassword != ""){
+                    if(email != "" && phone != "" && password != "" && confirmPassword != ""){
                         if(password == confirmPassword){
                             authVM.isLoading = LOADING
                             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
                                 if (it.isSuccessful()){
+                                    myRef.push().setValue(activationPinDetails)
                                     authVM.addAllSubjectsAndImage(context = context)
-                                    Toast.makeText(context, "Successfully Register", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Sign up Successful", Toast.LENGTH_SHORT).show()
+                                    scope.launch {
+                                        loginScreenKey.saveKey(pin)
+                                    }
                                     loginCheck = COMPLETE
                                 }else{
                                     Toast.makeText(context, "Try Again Something went wrong", Toast.LENGTH_SHORT).show()
@@ -284,6 +302,8 @@ fun SignUpNor(
                         Toast.makeText(context, "empty fields", Toast.LENGTH_SHORT).show()
                     }
 
+                }else{
+                    Toast.makeText(context, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
                 }
 
             }

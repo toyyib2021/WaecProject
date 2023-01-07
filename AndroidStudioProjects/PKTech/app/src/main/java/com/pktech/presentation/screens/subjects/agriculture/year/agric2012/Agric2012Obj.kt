@@ -12,18 +12,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import com.pktech.data.local.StudyOrTestKey
+import com.pktech.data.local.entity.Account
 import com.pktech.data.local.entity.Agriculture
 import com.pktech.data.local.entity.SelectedOptionDB
+import com.pktech.data.local.utill.QuestionTitleKey
 import com.pktech.data.repository.UiRepository
+import com.pktech.navigation.screens.AccountObjYear
+import com.pktech.navigation.screens.AgricultureObjYear
 import com.pktech.presentation.screens.subjects.QuestionIndexSheet
 import com.pktech.presentation.screens.subjects.SubjectVM
+import com.pktech.presentation.screens.subjects.account.year.account2012.Account2012VM
 import com.pktech.presentation.screens.subjects.agriculture.year.agric2012.items.AgricultureQuestion
+import com.pktech.presentation.screens.subjects.agriculture.year.agric2015.Agric2015VM
+import com.pktech.presentation.screens.subjects.eng.year.eng2012.items.EnglishQuestion
 import com.pktech.presentation.screens.subjects.items.*
+import com.pktech.presentation.screens.subjects.questionIndexSheet1to60
 import com.pktech.presentation.screens.subjects.questionIndexSheetRepo
 import com.pktech.ui.theme.White
 import com.pktech.utill.BackHandlerFun
+import com.pktech.utill.Constants
 import com.pktech.utill.SaveQuestionConstants
+import com.pktech.utill.SaveQuestionConstants.AGRICULTURE2012
 import kotlinx.coroutines.launch
 
 
@@ -34,52 +45,93 @@ fun Agric2012Obj(
     onYesClickStudy: () -> Unit,
     onYesClickTest: () -> Unit,
 ){
-
     val context = LocalContext.current
     val subjectVM: SubjectVM = hiltViewModel()
-    val agric2012VM: Agric2012VM = hiltViewModel()
+    val agricultureVM: Agric2012VM = hiltViewModel()
     val uiRepository = UiRepository()
     val studyOrTestKey = StudyOrTestKey(context)
+    val questionTitleKey = QuestionTitleKey(context)
     val scope = rememberCoroutineScope()
+    val questionTitle = SaveQuestionConstants.AGRICULTURE2012
+    val questionRoute = AgricultureObjYear.Obj2012.route
 
+    val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
+    val getSelectedOptionR = subjectVM.getSelectedOption.value
+    getSelectedOption::class.java
 
+    val agricultureQuestion by agricultureVM.getAgric2012.observeAsState(listOf<Agriculture>())
+    val agricultureQuestionR = agricultureVM.getAgric2012.value
+    agricultureQuestion::class.java
 
-    val studyOrTestKeyValue = studyOrTestKey.getKey.collectAsState(initial = "")
+    val getSelectedOptionCol by subjectVM.getSelectedOptionCol.observeAsState(listOf())
+    val getSelectedOptionColR = subjectVM.getSelectedOptionCol.value
+    getSelectedOptionCol::class.java
 
-    val agric2012 by agric2012VM.getAgric2012.observeAsState(listOf<Agriculture>())
-    val agric2012R = agric2012VM.getAgric2012.value
-    agric2012::class.java
+    // bottomSheet 1 - 100, bottomSheet 1 - 80, bottomSheet 1 - 60, bottomSheet1to100 1 - 50 //
+    val bottomSheetList = getSelectedOptionColR?.let { questionIndexSheet1to60(it) }
+    val questionSize = agricultureQuestionR?.agriculture?.size
+
+    val studyOrTestKeyState = studyOrTestKey.getKey.collectAsState(initial = "")
+    val studyOrTestKeyValue = studyOrTestKeyState.value
+    val questionTitleKeyState = questionTitleKey.getKey.collectAsState(initial = "")
+    val questionTitleKeyValue = questionTitleKeyState.value
 
     var currentIndex by remember { mutableStateOf(0) }
 
-    val questionIndex = agric2012R?.agriculture?.get(currentIndex)?.objective?.id
-    val currentQuestion = agric2012R?.agriculture?.get(currentIndex)?.objective?.question
-    val mainOptionA = agric2012R?.agriculture?.get(currentIndex)?.objective?.optionA
-    val mainOptionB = agric2012R?.agriculture?.get(currentIndex)?.objective?.optionB
-    val mainOptionC = agric2012R?.agriculture?.get(currentIndex)?.objective?.optionC
-    val mainOptionD = agric2012R?.agriculture?.get(currentIndex)?.objective?.optionD
-    val answer = agric2012R?.agriculture?.get(currentIndex)?.objective?.explanation
-    val essay = agric2012R?.agriculture?.get(currentIndex)?.objective?.essay
-    val currentInstructions = agric2012R?.agriculture?.get(currentIndex)?.objective?.instructions
-    val correctOption = agric2012R?.agriculture?.get(currentIndex)?.objective?.correctOption
+
+    val questionIndex = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.id
+    val currentQuestion = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.question
+    val mainOptionA = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.optionA
+    val mainOptionB = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.optionB
+    val mainOptionC = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.optionC
+    val mainOptionD = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.optionD
+    val answer = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.explanation
+    val currentInstructions = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.instructions
+    val correctOption = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.correctOption
+    val underline = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.questionUnderline
+    val endQuestion = agricultureQuestionR?.agriculture?.get(currentIndex)?.objective?.questionEnd
 
 
+    subjectVM.addSaveQuestionData.value.questionTitle = questionTitle
 
+    if (endQuestion != null) {
+        subjectVM.addSaveQuestionData.value.questionEnd = endQuestion
+    }
+
+    if (underline != null) {
+        subjectVM.addSaveQuestionData.value.questionUnderline = underline
+    }
+
+    if (currentInstructions != null) {
+        subjectVM.addSaveQuestionData.value.instructions = currentInstructions
+    }
+    if (questionIndex != null) {
+        subjectVM.addSaveQuestionData.value.questionIndex = questionIndex
+    }
+    if (currentQuestion != null) {
+        subjectVM.addSaveQuestionData.value.question = currentQuestion
+    }
+    if (mainOptionA != null) {
+        subjectVM.addSaveQuestionData.value.optionA = mainOptionA
+    }
+    if (mainOptionB != null) {
+        subjectVM.addSaveQuestionData.value.optionB = mainOptionB
+    }
+    if (mainOptionC != null) {
+        subjectVM.addSaveQuestionData.value.optionC = mainOptionC
+    }
+    if (mainOptionD != null) {
+        subjectVM.addSaveQuestionData.value.optionD = mainOptionD
+    }
+    if (answer != null) {
+        subjectVM.addSaveQuestionData.value.answer = answer
+    }
 
     val alphabetOptionA = uiRepository.alphabetOptions[currentIndex].options[0]
     val alphabetOptionB = uiRepository.alphabetOptions[currentIndex].options[1]
     val alphabetOptionC = uiRepository.alphabetOptions[currentIndex].options[2]
     val alphabetOptionD = uiRepository.alphabetOptions[currentIndex].options[3]
 
-
-
-    val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
-    val getSelectedOptionR = subjectVM.getSelectedOption.value
-    getSelectedOption::class.java
-
-    val getSelectedOptionCol by subjectVM.getSelectedOptionCol.observeAsState(listOf())
-    val getSelectedOptionColR = subjectVM.getSelectedOptionCol.value
-    getSelectedOptionCol::class.java
 
     var selectedOptionState by remember { mutableStateOf("") }
     val currentSelectedOption = getSelectedOptionR?.get(currentIndex)?.selectedOption
@@ -89,39 +141,22 @@ fun Agric2012Obj(
         selectedOptionState  =  currentSelectedOption
 
     }
-
-
-    var expandedState by remember { mutableStateOf(false) }
     var openDialog by remember { mutableStateOf(false) }
     var openInstruction by remember { mutableStateOf(false) }
-    var correctOptionColor by remember { mutableStateOf("") }
+    var expandedState by remember { mutableStateOf(false) }
+
 
     val snackbarHostStateForSaveQuestion = remember { SnackbarHostState() }
 
-
-
-
     val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(key1 = subjectVM.minutes, key2 = subjectVM.seconds){
-        if (subjectVM.minutes == "05" && subjectVM.seconds == "00" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("You have five minutes left")
-            }
-        }else if (subjectVM.minutes == "01" && subjectVM.seconds == "00" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("You have one minutes left")
-            }
-        }else if (subjectVM.minutes == "00" && subjectVM.seconds == "-10" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("TIME UP")
-            }
-            onYesClickTest()
+
+    TimeUpAction(subjectVM, scope, snackbarHostState, onYesClickTest)
+
+
+    LaunchedEffect(key1 = studyOrTestKeyValue){
+        when(studyOrTestKeyValue){
+            Constants.SELECTED_TEST_KEY -> subjectVM.startEng()
         }
-
-    }
-
-    LaunchedEffect(key1 = true){
-        subjectVM.start()
     }
 
     val sheetState = rememberBottomSheetState(
@@ -133,6 +168,21 @@ fun Agric2012Obj(
 
 
     BackHandlerFun(backHandler = { openDialog = true })
+    val correctOptionColourState = "A"
+    var correctOptionColor = ""
+
+
+    when(studyOrTestKeyValue){
+        Constants.SHOWANSWERFORTEST -> {
+            if (correctOptionColourState == "A") {
+                if (correctOption != null) {
+                    correctOptionColor = correctOption
+                }
+
+            }
+        }
+    }
+
 
 
     BottomSheetScaffold(
@@ -147,13 +197,9 @@ fun Agric2012Obj(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(White)) {
-
-                        getSelectedOptionColR?.let {
-                            questionIndexSheetRepo(
-                                optionSelectState = it,
-                            )
-                        }?.let {
+                            .background(White)
+                    ) {
+                        if (bottomSheetList != null) {
                             QuestionIndexSheet(
                                 onQuestionIndexClick = {
                                     currentIndex = it
@@ -164,9 +210,8 @@ fun Agric2012Obj(
                                             sheetState.collapse()
                                         }
                                     }
-
                                 },
-                                list = it
+                                list = bottomSheetList
                             )
                         }
 
@@ -180,22 +225,53 @@ fun Agric2012Obj(
 
         Scaffold(
             topBar = {
+                var resultKey by remember { mutableStateOf(0) }
+                val finailResult by remember { mutableStateOf(0) }
+                val splitList = questionTitle.split(" ")
+                val splitListSubject = splitList[0]
+                val splitListYear = splitList[1]
+
+                // Adding Test Event //
+                TestTimelineAgriculture(
+                    resultKey,
+                    splitListYear,
+                    splitListSubject,
+                    subjectVM,
+                    agricultureQuestionR,
+                    getSelectedOptionR,
+                    finailResult,
+                    questionTitleKey,
+                    questionRoute
+                )
+
+                // Adding Studying Event //
+                StudyTimeline(resultKey, splitListYear, splitListSubject, subjectVM)
+
                 DisplayAlertDialog(
                     openDialog = openDialog,
                     closeDialog = { openDialog = false},
-                    onYesClickedStudy = { onYesClickStudy() },
-                    onYesClickedTest = { onYesClickTest() },
-                    studyOrTestKey = studyOrTestKeyValue.value
+                    onYesClickedStudy = {
+                        resultKey = 1
+                        onYesClickStudy()
+                    },
+                    onYesClickedTest = {
+                        if(studyOrTestKeyValue == Constants.SHOWANSWERFORTEST){
+                            onYesClickStudy()
+                        }
+                        resultKey = 2
+                        onYesClickTest()
+                    },
+                    studyOrTestKey = studyOrTestKeyValue
                 )
                 StudyTopBar(
                     onEndQuizClick = {
                         openDialog = true
                     },
-                    hours = subjectVM.hours,
-                    minutes = subjectVM.minutes,
-                    seconds = subjectVM.seconds,
-                    studyOrTestState = studyOrTestKeyValue.value,
-                    questionTitle = SaveQuestionConstants.ACCOUNTING2012,
+                    hours = subjectVM.hoursEng,
+                    minutes = subjectVM.minutesEng,
+                    seconds = subjectVM.secondsEng,
+                    studyOrTestState = studyOrTestKeyValue,
+                    questionTitle = questionTitle,
                     secondsStudy = subjectVM.secondsStudy,
                     minutesStudy = subjectVM.minutesStudy,
                     hoursStudy = subjectVM.hoursStudy
@@ -209,12 +285,11 @@ fun Agric2012Obj(
                     closeInstruction = { openInstruction = false },
                     instruction = currentInstructions
                 )
-
                 StudyObjUIItems(
                     instructions = currentInstructions,
                     openInstruction = { openInstruction = true },
-                    questionSize = agric2012R.agriculture.size.toString(),
-                    studyOrTestState = studyOrTestKeyValue.value,
+                    questionSize = questionSize.toString(),
+                    studyOrTestState = studyOrTestKeyValue,
                     onSaveIconClick = {
                         subjectVM.addSaveQuestion()
                         scope.launch {
@@ -223,18 +298,20 @@ fun Agric2012Obj(
                     },
                     onShowAnswerIconClick = {
                         if (!expandedState) {
-                            if (correctOption != null){
+                            if (correctOption != null) {
                                 correctOptionColor = correctOption
                             }
+
 
                         }
                         expandedState = !expandedState
                     },
                     onShowAnswerClick = {
                         if (!expandedState) {
-                            if (correctOption != null){
+                            if (correctOption != null) {
                                 correctOptionColor = correctOption
                             }
+
 
                         }
                         expandedState = !expandedState
@@ -247,14 +324,15 @@ fun Agric2012Obj(
                     },
                     questionIndex = questionIndex,
                     currentQuestion = {
-                        if (currentQuestion != null) {
-                            if (essay != null) {
-                                CurrentQuestion {
-                                    AgricultureQuestion(
-                                        question = currentQuestion,
-                                        essay = essay
-                                    )
-                                }
+                        if (currentQuestion != null &&
+                            endQuestion != null && underline != null
+                        ) {
+                            CurrentQuestion {
+                                EnglishQuestion(
+                                    question = currentQuestion,
+                                    underline = underline,
+                                    endLine = endQuestion
+                                )
                             }
                         }
                     },
@@ -266,30 +344,28 @@ fun Agric2012Obj(
                                 sheetState.collapse()
                             }
                         }
+
                     },
                     onPreviousBtClick = {
                         if (currentIndex == 0){
-
                             Toast.makeText(context, "Fist Question", Toast.LENGTH_SHORT).show()
                         }else if(expandedState){
                             expandedState = false
                             currentIndex--
-                            correctOptionColor = ""
                         }else{
                             currentIndex--
-                            correctOptionColor = ""
+
                         }
                     },
                     onNextBtClick = {
-                        if (currentIndex == 49){
+                        if (currentIndex == questionSize?.minus(1) ){
                             Toast.makeText(context, "Last Question", Toast.LENGTH_SHORT).show()
                         }else if(expandedState){
                             expandedState = false
                             currentIndex++
-                            correctOptionColor = ""
-                        }else {
+                        } else {
                             currentIndex++
-                            correctOptionColor = ""
+
                         }
                     },
                     optionA = {
@@ -363,6 +439,7 @@ fun Agric2012Obj(
                                         }
                                     },
                                     emptyCorrectOption = correctOptionColor
+
                                 )
                             }
                         }
@@ -388,6 +465,7 @@ fun Agric2012Obj(
                                         }
                                     },
                                     emptyCorrectOption = correctOptionColor
+
                                 )
                             }
                         }
@@ -396,11 +474,27 @@ fun Agric2012Obj(
                     snackbarHostStateForTime = snackbarHostState,
                     snackbarHostStateForSaveQuestion = snackbarHostStateForSaveQuestion
                 )
+
             }
 
         }
     }
 
 
+    when(studyOrTestKeyValue){
+        Constants.SELECTED_STUDY_KEY -> {
+            ComposableLifecycle{ source, event ->
+                when(event){
+                    Lifecycle.Event.ON_PAUSE -> {
+                        Toast.makeText(context, "On Pause", Toast.LENGTH_SHORT).show()
+                        subjectVM.pauseStudy()}
+                    Lifecycle.Event.ON_RESUME -> {
+                        Toast.makeText(context, "On Resume", Toast.LENGTH_SHORT).show()
+                        subjectVM.startForStudy()}
+                    else -> {}
+                }
+            }
+        }
+    }
 }
 

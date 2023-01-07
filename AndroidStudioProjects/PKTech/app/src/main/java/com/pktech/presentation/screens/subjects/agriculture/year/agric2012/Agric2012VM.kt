@@ -15,7 +15,5 @@ class Agric2012VM @Inject constructor(
 
     var  getAgric2012: LiveData<Agriculture> = agricultureRepository.getAYearAgriculture(year = "2012")
 
-
-
 }
 

@@ -12,18 +12,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import com.pktech.data.local.StudyOrTestKey
 import com.pktech.data.local.entity.Account
+import com.pktech.data.local.entity.English
 import com.pktech.data.local.entity.SelectedOptionDB
+import com.pktech.data.local.utill.QuestionTitleKey
 import com.pktech.data.repository.UiRepository
+import com.pktech.navigation.screens.AccountObjYear
 import com.pktech.presentation.screens.subjects.QuestionIndexSheet
 import com.pktech.presentation.screens.subjects.SubjectVM
-import com.pktech.presentation.screens.subjects.account.year.account2012.items.AccountQuestion
+import com.pktech.presentation.screens.subjects.eng.year.eng2012.items.EnglishQuestion
 import com.pktech.presentation.screens.subjects.items.*
 import com.pktech.presentation.screens.subjects.items.CurrentAnswer
 import com.pktech.presentation.screens.subjects.questionIndexSheetRepo
 import com.pktech.ui.theme.White
 import com.pktech.utill.BackHandlerFun
+import com.pktech.utill.Constants
+import com.pktech.utill.SaveQuestionConstants
 import com.pktech.utill.SaveQuestionConstants.ACCOUNTING2012
 import kotlinx.coroutines.launch
 
@@ -43,17 +49,34 @@ fun Account2012Obj(
     val account2012VM: Account2012VM = hiltViewModel()
     val uiRepository = UiRepository()
     val studyOrTestKey = StudyOrTestKey(context)
+    val questionTitleKey = QuestionTitleKey(context)
     val scope = rememberCoroutineScope()
+    val questionTitle = ACCOUNTING2012
+    val questionRoute = AccountObjYear.Obj2012.route
 
-
-
-    val studyOrTestKeyValue = studyOrTestKey.getKey.collectAsState(initial = "")
+    val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
+    val getSelectedOptionR = subjectVM.getSelectedOption.value
+    getSelectedOption::class.java
 
     val account2012 by account2012VM.getAccount2012.observeAsState(listOf<Account>())
     val account2012R = account2012VM.getAccount2012.value
     account2012::class.java
 
+    val getSelectedOptionCol by subjectVM.getSelectedOptionCol.observeAsState(listOf())
+    val getSelectedOptionColR = subjectVM.getSelectedOptionCol.value
+    getSelectedOptionCol::class.java
+
+    // bottomSheet 1 - 100, bottomSheet 1 - 80, bottomSheet 1 - 60, bottomSheet1to100 1 - 50 //
+    val bottomSheetList = getSelectedOptionColR?.let { questionIndexSheetRepo(it) }
+    val questionSize = account2012R?.account?.size
+
+    val studyOrTestKeyState = studyOrTestKey.getKey.collectAsState(initial = "")
+    val studyOrTestKeyValue = studyOrTestKeyState.value
+    val questionTitleKeyState = questionTitleKey.getKey.collectAsState(initial = "")
+    val questionTitleKeyValue = questionTitleKeyState.value
+
     var currentIndex by remember { mutableStateOf(0) }
+
 
     val questionIndex = account2012R?.account?.get(currentIndex)?.objective?.id
     val currentQuestion = account2012R?.account?.get(currentIndex)?.objective?.question
@@ -62,27 +85,52 @@ fun Account2012Obj(
     val mainOptionC = account2012R?.account?.get(currentIndex)?.objective?.optionC
     val mainOptionD = account2012R?.account?.get(currentIndex)?.objective?.optionD
     val answer = account2012R?.account?.get(currentIndex)?.objective?.explanation
-    val essay = account2012R?.account?.get(currentIndex)?.objective?.essay
     val currentInstructions = account2012R?.account?.get(currentIndex)?.objective?.instructions
     val correctOption = account2012R?.account?.get(currentIndex)?.objective?.correctOption
+    val underline = account2012R?.account?.get(currentIndex)?.objective?.questionUnderline
+    val endQuestion = account2012R?.account?.get(currentIndex)?.objective?.questionEnd
 
 
+    subjectVM.addSaveQuestionData.value.questionTitle = questionTitle
 
+    if (endQuestion != null) {
+        subjectVM.addSaveQuestionData.value.questionEnd = endQuestion
+    }
+
+    if (underline != null) {
+        subjectVM.addSaveQuestionData.value.questionUnderline = underline
+    }
+
+    if (currentInstructions != null) {
+        subjectVM.addSaveQuestionData.value.instructions = currentInstructions
+    }
+    if (questionIndex != null) {
+        subjectVM.addSaveQuestionData.value.questionIndex = questionIndex
+    }
+    if (currentQuestion != null) {
+        subjectVM.addSaveQuestionData.value.question = currentQuestion
+    }
+    if (mainOptionA != null) {
+        subjectVM.addSaveQuestionData.value.optionA = mainOptionA
+    }
+    if (mainOptionB != null) {
+        subjectVM.addSaveQuestionData.value.optionB = mainOptionB
+    }
+    if (mainOptionC != null) {
+        subjectVM.addSaveQuestionData.value.optionC = mainOptionC
+    }
+    if (mainOptionD != null) {
+        subjectVM.addSaveQuestionData.value.optionD = mainOptionD
+    }
+    if (answer != null) {
+        subjectVM.addSaveQuestionData.value.answer = answer
+    }
 
     val alphabetOptionA = uiRepository.alphabetOptions[currentIndex].options[0]
     val alphabetOptionB = uiRepository.alphabetOptions[currentIndex].options[1]
     val alphabetOptionC = uiRepository.alphabetOptions[currentIndex].options[2]
     val alphabetOptionD = uiRepository.alphabetOptions[currentIndex].options[3]
 
-
-
-    val getSelectedOption by subjectVM.getSelectedOption.observeAsState(listOf())
-    val getSelectedOptionR = subjectVM.getSelectedOption.value
-    getSelectedOption::class.java
-
-    val getSelectedOptionCol by subjectVM.getSelectedOptionCol.observeAsState(listOf())
-    val getSelectedOptionColR = subjectVM.getSelectedOptionCol.value
-    getSelectedOptionCol::class.java
 
     var selectedOptionState by remember { mutableStateOf("") }
     val currentSelectedOption = getSelectedOptionR?.get(currentIndex)?.selectedOption
@@ -92,39 +140,22 @@ fun Account2012Obj(
         selectedOptionState  =  currentSelectedOption
 
     }
-
-
-    var expandedState by remember { mutableStateOf(false)}
-    var openDialog by remember { mutableStateOf(false)}
+    var openDialog by remember { mutableStateOf(false) }
     var openInstruction by remember { mutableStateOf(false) }
-    var correctOptionColor by remember { mutableStateOf("") }
+    var expandedState by remember { mutableStateOf(false) }
+
 
     val snackbarHostStateForSaveQuestion = remember { SnackbarHostState() }
 
-
-
     val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(key1 = subjectVM.minutes, key2 = subjectVM.seconds){
-        if (subjectVM.minutes == "05" && subjectVM.seconds == "00" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("You have five minutes left")
-            }
-        }else if (subjectVM.minutes == "01" && subjectVM.seconds == "00" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("You have one minutes left")
-            }
-        }else if (subjectVM.minutes == "00" && subjectVM.seconds == "00" ){
-            scope.launch {
-                snackbarHostState.showSnackbar("TIME UP")
-            }
-        }else if (subjectVM.minutes == "00" && subjectVM.seconds == "-5" ){
-            onYesClickTest()
+
+    TimeUpAction(subjectVM, scope, snackbarHostState, onYesClickTest)
+
+
+    LaunchedEffect(key1 = studyOrTestKeyValue){
+        when(studyOrTestKeyValue){
+            Constants.SELECTED_TEST_KEY -> subjectVM.startEng()
         }
-
-    }
-
-    LaunchedEffect(key1 = true){
-        subjectVM.start()
     }
 
     val sheetState = rememberBottomSheetState(
@@ -136,6 +167,21 @@ fun Account2012Obj(
 
 
     BackHandlerFun(backHandler = { openDialog = true })
+    val correctOptionColourState = "A"
+    var correctOptionColor = ""
+
+
+    when(studyOrTestKeyValue){
+        Constants.SHOWANSWERFORTEST -> {
+            if (correctOptionColourState == "A") {
+                if (correctOption != null) {
+                    correctOptionColor = correctOption
+                }
+
+            }
+        }
+    }
+
 
 
     BottomSheetScaffold(
@@ -150,13 +196,9 @@ fun Account2012Obj(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(White)) {
-
-                        getSelectedOptionColR?.let {
-                            questionIndexSheetRepo(
-                                optionSelectState = it,
-                            )
-                        }?.let {
+                            .background(White)
+                    ) {
+                        if (bottomSheetList != null) {
                             QuestionIndexSheet(
                                 onQuestionIndexClick = {
                                     currentIndex = it
@@ -167,9 +209,8 @@ fun Account2012Obj(
                                             sheetState.collapse()
                                         }
                                     }
-
                                 },
-                                list = it
+                                list = bottomSheetList
                             )
                         }
 
@@ -183,22 +224,53 @@ fun Account2012Obj(
 
         Scaffold(
             topBar = {
+                var resultKey by remember { mutableStateOf(0)}
+                val finailResult by remember { mutableStateOf(0)}
+                val splitList = questionTitle.split(" ")
+                val splitListSubject = splitList[0]
+                val splitListYear = splitList[1]
+
+                // Adding Test Event //
+                TestTimelineAccount(
+                    resultKey,
+                    splitListYear,
+                    splitListSubject,
+                    subjectVM,
+                    account2012R,
+                    getSelectedOptionR,
+                    finailResult,
+                    questionTitleKey,
+                    questionRoute
+                )
+
+                // Adding Studying Event //
+                StudyTimeline(resultKey, splitListYear, splitListSubject, subjectVM)
+
                 DisplayAlertDialog(
                     openDialog = openDialog,
                     closeDialog = { openDialog = false},
-                    onYesClickedStudy = { onYesClickStudy() },
-                    onYesClickedTest = { onYesClickTest() },
-                    studyOrTestKey = studyOrTestKeyValue.value
+                    onYesClickedStudy = {
+                        resultKey = 1
+                        onYesClickStudy()
+                    },
+                    onYesClickedTest = {
+                        if(studyOrTestKeyValue == Constants.SHOWANSWERFORTEST){
+                            onYesClickStudy()
+                        }
+                        resultKey = 2
+                        onYesClickTest()
+                    },
+                    studyOrTestKey = studyOrTestKeyValue
                 )
                 StudyTopBar(
                     onEndQuizClick = {
                         openDialog = true
                     },
-                    hours = subjectVM.hours,
-                    minutes = subjectVM.minutes,
-                    seconds = subjectVM.seconds,
-                    studyOrTestState = studyOrTestKeyValue.value,
-                    questionTitle = ACCOUNTING2012,
+                    hours = subjectVM.hoursEng,
+                    minutes = subjectVM.minutesEng,
+                    seconds = subjectVM.secondsEng,
+                    studyOrTestState = studyOrTestKeyValue,
+                    questionTitle = questionTitle,
                     secondsStudy = subjectVM.secondsStudy,
                     minutesStudy = subjectVM.minutesStudy,
                     hoursStudy = subjectVM.hoursStudy
@@ -212,33 +284,33 @@ fun Account2012Obj(
                     closeInstruction = { openInstruction = false },
                     instruction = currentInstructions
                 )
-
                 StudyObjUIItems(
                     instructions = currentInstructions,
                     openInstruction = { openInstruction = true },
-                    questionSize = account2012R.account.size.toString(),
-                    studyOrTestState = studyOrTestKeyValue.value,
+                    questionSize = questionSize.toString(),
+                    studyOrTestState = studyOrTestKeyValue,
                     onSaveIconClick = {
                         subjectVM.addSaveQuestion()
                         scope.launch {
                             snackbarHostStateForSaveQuestion.showSnackbar("Successfully Added To Save Question List")
                         }
-
                     },
                     onShowAnswerIconClick = {
                         if (!expandedState) {
-                            if (correctOption != null){
+                            if (correctOption != null) {
                                 correctOptionColor = correctOption
                             }
+
 
                         }
                         expandedState = !expandedState
                     },
                     onShowAnswerClick = {
                         if (!expandedState) {
-                            if (correctOption != null){
+                            if (correctOption != null) {
                                 correctOptionColor = correctOption
                             }
+
 
                         }
                         expandedState = !expandedState
@@ -251,14 +323,15 @@ fun Account2012Obj(
                     },
                     questionIndex = questionIndex,
                     currentQuestion = {
-                        if (currentQuestion != null) {
-                            if (essay != null) {
-                                CurrentQuestion {
-                                    AccountQuestion(
-                                        question = currentQuestion,
-                                        essay = essay
-                                    )
-                                }
+                        if (currentQuestion != null &&
+                            endQuestion != null && underline != null
+                        ) {
+                            CurrentQuestion {
+                                EnglishQuestion(
+                                    question = currentQuestion,
+                                    underline = underline,
+                                    endLine = endQuestion
+                                )
                             }
                         }
                     },
@@ -270,30 +343,28 @@ fun Account2012Obj(
                                 sheetState.collapse()
                             }
                         }
+
                     },
                     onPreviousBtClick = {
                         if (currentIndex == 0){
-
                             Toast.makeText(context, "Fist Question", Toast.LENGTH_SHORT).show()
                         }else if(expandedState){
                             expandedState = false
                             currentIndex--
-                            correctOptionColor = ""
                         }else{
                             currentIndex--
-                            correctOptionColor = ""
+
                         }
                     },
                     onNextBtClick = {
-                        if (currentIndex == 49){
+                        if (currentIndex == questionSize?.minus(1) ){
                             Toast.makeText(context, "Last Question", Toast.LENGTH_SHORT).show()
                         }else if(expandedState){
                             expandedState = false
                             currentIndex++
-                            correctOptionColor = ""
-                        }else {
+                        } else {
                             currentIndex++
-                            correctOptionColor = ""
+
                         }
                     },
                     optionA = {
@@ -367,6 +438,7 @@ fun Account2012Obj(
                                         }
                                     },
                                     emptyCorrectOption = correctOptionColor
+
                                 )
                             }
                         }
@@ -392,6 +464,7 @@ fun Account2012Obj(
                                         }
                                     },
                                     emptyCorrectOption = correctOptionColor
+
                                 )
                             }
                         }
@@ -400,13 +473,29 @@ fun Account2012Obj(
                     snackbarHostStateForTime = snackbarHostState,
                     snackbarHostStateForSaveQuestion = snackbarHostStateForSaveQuestion
                 )
+
             }
 
         }
     }
 
 
- }
+    when(studyOrTestKeyValue){
+        Constants.SELECTED_STUDY_KEY -> {
+            ComposableLifecycle{ source, event ->
+                when(event){
+                    Lifecycle.Event.ON_PAUSE -> {
+                        Toast.makeText(context, "On Pause", Toast.LENGTH_SHORT).show()
+                        subjectVM.pauseStudy()}
+                    Lifecycle.Event.ON_RESUME -> {
+                        Toast.makeText(context, "On Resume", Toast.LENGTH_SHORT).show()
+                        subjectVM.startForStudy()}
+                    else -> {}
+                }
+            }
+        }
+    }
+}
 
 
 
